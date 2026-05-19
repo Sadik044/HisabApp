@@ -8,6 +8,7 @@ import { ArrowDownToLine, ArrowUpFromLine, Wallet, PiggyBank, Plus, Minus } from
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   PieChart, Pie, Cell, ResponsiveContainer, Tooltip,
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend,
@@ -31,7 +32,7 @@ function DashboardPage() {
   });
   const currency = profile?.currency ?? "BDT";
 
-  const { data: jars = [] } = useQuery({
+  const { data: jars = [], isLoading: jarsLoading } = useQuery({
     queryKey: ["jars", userId],
     queryFn: async () => {
       const { data, error } = await supabase.from("jars").select("*").eq("user_id", userId).order("sort_order");
@@ -40,7 +41,7 @@ function DashboardPage() {
     },
   });
 
-  const { data: monthly } = useQuery({
+  const { data: monthly, isLoading: monthlyLoading } = useQuery({
     queryKey: ["monthly", userId],
     queryFn: async () => {
       const start = new Date();
@@ -153,10 +154,18 @@ function DashboardPage() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard icon={ArrowDownToLine} label="Income (this month)" value={formatCurrency(income, currency)} accent="text-emerald-500" />
-        <StatCard icon={ArrowUpFromLine} label="Expenses (this month)" value={formatCurrency(expense, currency)} accent="text-red-500" />
-        <StatCard icon={Wallet} label="Net savings" value={formatCurrency(netSavings, currency)} accent={netSavings >= 0 ? "text-emerald-500" : "text-red-500"} />
-        <StatCard icon={PiggyBank} label="Biggest jar" value={biggestJar ? formatCurrency(Number(biggestJar.balance), currency) : "—"} sub={biggestJar?.name ?? "No jars"} />
+        {monthlyLoading || jarsLoading ? (
+          <>
+            <StatSkeleton /><StatSkeleton /><StatSkeleton /><StatSkeleton />
+          </>
+        ) : (
+          <>
+            <StatCard icon={ArrowDownToLine} label="Income (this month)" value={formatCurrency(income, currency)} accent="text-emerald-500" />
+            <StatCard icon={ArrowUpFromLine} label="Expenses (this month)" value={formatCurrency(expense, currency)} accent="text-red-500" />
+            <StatCard icon={Wallet} label="Net savings" value={formatCurrency(netSavings, currency)} accent={netSavings >= 0 ? "text-emerald-500" : "text-red-500"} />
+            <StatCard icon={PiggyBank} label="Biggest jar" value={biggestJar ? formatCurrency(Number(biggestJar.balance), currency) : "—"} sub={biggestJar?.name ?? "No jars"} />
+          </>
+        )}
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
@@ -297,4 +306,17 @@ function ChartCard({ title, subtitle, children }: { title: string; subtitle?: st
 
 function EmptyChart({ label }: { label: string }) {
   return <div className="grid h-[240px] place-items-center text-sm text-muted-foreground">{label}</div>;
+}
+
+function StatSkeleton() {
+  return (
+    <div className="rounded-2xl border bg-card p-5 shadow-sm">
+      <div className="flex items-center justify-between">
+        <Skeleton className="h-4 w-28" />
+        <Skeleton className="h-4 w-4 rounded-full" />
+      </div>
+      <Skeleton className="mt-3 h-7 w-32" />
+      <Skeleton className="mt-2 h-3 w-20" />
+    </div>
+  );
 }
