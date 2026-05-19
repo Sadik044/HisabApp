@@ -15,6 +15,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
+import "@/lib/i18n";
+import { LanguageSync } from "@/components/language-sync";
 
 function NotFoundComponent() {
   return (
@@ -92,6 +94,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
+      {
+        rel: "preconnect",
+        href: "https://fonts.googleapis.com",
+      },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -122,6 +132,7 @@ function RootComponent() {
       <ThemeProvider>
         <AuthProvider>
           <AuthEvents />
+          <LanguageSync />
           <Outlet />
           <Toaster richColors position="top-right" />
         </AuthProvider>
