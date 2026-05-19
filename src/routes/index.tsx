@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { motion } from "framer-motion";
 import { ContactSection } from "@/components/contact-section";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { useTranslation } from "react-i18next";
 import { SiteFooter } from "@/components/site-footer";
 import {
   Wallet,
@@ -62,6 +64,7 @@ const testimonials = [
 ];
 
 function Index() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-40 border-b bg-background/70 backdrop-blur-xl">
@@ -73,16 +76,17 @@ function Index() {
             <span className="font-semibold tracking-tight">JarWise</span>
           </Link>
           <nav className="hidden items-center gap-6 md:flex">
-            <a href="#features" className="text-sm text-muted-foreground hover:text-foreground">Features</a>
-            <a href="#how" className="text-sm text-muted-foreground hover:text-foreground">How it works</a>
+            <a href="#features" className="text-sm text-muted-foreground hover:text-foreground">{t("nav.features")}</a>
+            <a href="#how" className="text-sm text-muted-foreground hover:text-foreground">{t("nav.howItWorks")}</a>
             <a href="#jars" className="text-sm text-muted-foreground hover:text-foreground">The 6 Jars</a>
             <a href="#testimonials" className="text-sm text-muted-foreground hover:text-foreground">Reviews</a>
-            <a href="#contact" className="text-sm text-muted-foreground hover:text-foreground">Contact</a>
+            <a href="#contact" className="text-sm text-muted-foreground hover:text-foreground">{t("nav.contact")}</a>
           </nav>
           <div className="flex items-center gap-2">
+            <LanguageSwitcher />
             <ThemeToggle />
-            <Button asChild variant="ghost" className="hidden sm:inline-flex"><Link to="/login">Log in</Link></Button>
-            <Button asChild><Link to="/register">Get started</Link></Button>
+            <Button asChild variant="ghost" className="hidden sm:inline-flex"><Link to="/login">{t("common.login")}</Link></Button>
+            <Button asChild><Link to="/register">{t("nav.getStarted")}</Link></Button>
           </div>
         </div>
       </header>
@@ -104,18 +108,17 @@ function Index() {
               <Sparkles className="h-3 w-3 text-primary" /> The proven 6 Jar Money Method
             </div>
             <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
-              Take Control of Your Money with the{" "}
-              <span className="bg-gradient-to-r from-primary to-emerald-500 bg-clip-text text-transparent">6 Jar Method</span>
+              {t("landing.headline")}
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-balance text-lg text-muted-foreground">
-              Auto-split every income across 6 purpose-driven jars, track expenses effortlessly, and grow real wealth — without spreadsheets.
+              {t("landing.subheadline")}
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button asChild size="lg" className="gap-2">
-                <Link to="/register">Get Started Free <ArrowRight className="h-4 w-4" /></Link>
+                <Link to="/register">{t("landing.getStartedFree")} <ArrowRight className="h-4 w-4" /></Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <a href="#features">See How It Works</a>
+                <a href="#features">{t("landing.seeHowItWorks")}</a>
               </Button>
             </div>
             <div className="mt-6 flex items-center justify-center gap-1 text-xs text-muted-foreground">

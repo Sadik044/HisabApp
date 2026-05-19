@@ -144,3 +144,9 @@
     color: var(--color-foreground);
   }
 }
+
+/* Bengali typography — applied via .font-bengali on <html> when language is bn */
+.font-bengali,
+.font-bengali body {
+  font-family: "Hind Siliguri", "Inter", system-ui, -apple-system, sans-serif;
+}

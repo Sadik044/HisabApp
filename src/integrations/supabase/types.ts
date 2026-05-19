@@ -155,6 +155,7 @@ export type Database = {
           currency: string
           full_name: string | null
           id: string
+          language: string
           monthly_reset: boolean
           notification_prefs: Json
           theme_preference: string
@@ -166,6 +167,7 @@ export type Database = {
           currency?: string
           full_name?: string | null
           id: string
+          language?: string
           monthly_reset?: boolean
           notification_prefs?: Json
           theme_preference?: string
@@ -177,6 +179,7 @@ export type Database = {
           currency?: string
           full_name?: string | null
           id?: string
+          language?: string
           monthly_reset?: boolean
           notification_prefs?: Json
           theme_preference?: string

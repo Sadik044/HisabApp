@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { formatCurrency, JAR_COLORS } from "@/lib/format";
 import { motion } from "framer-motion";
 import { ArrowDownToLine, ArrowUpFromLine, Wallet, PiggyBank, Plus, Minus } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -22,6 +23,7 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
 function DashboardPage() {
   const { user } = useAuth();
   const userId = user!.id;
+  const { t } = useTranslation();
 
   const { data: profile } = useQuery({
     queryKey: ["profile", userId],
@@ -140,15 +142,15 @@ function DashboardPage() {
     <div className="space-y-8">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight">Welcome back</h1>
-          <p className="text-sm text-muted-foreground">Here's your money at a glance.</p>
+          <h1 className="text-3xl font-semibold tracking-tight">{t("dashboard.welcome")}</h1>
+          <p className="text-sm text-muted-foreground">{t("dashboard.subtitle")}</p>
         </div>
         <div className="flex gap-2">
           <Button asChild size="sm" variant="outline">
-            <Link to="/income"><Plus className="mr-1 h-4 w-4" />Add income</Link>
+            <Link to="/income"><Plus className="mr-1 h-4 w-4" />{t("dashboard.addIncome")}</Link>
           </Button>
           <Button asChild size="sm">
-            <Link to="/expenses"><Minus className="mr-1 h-4 w-4" />Add expense</Link>
+            <Link to="/expenses"><Minus className="mr-1 h-4 w-4" />{t("dashboard.addExpense")}</Link>
           </Button>
         </div>
       </div>
@@ -160,16 +162,16 @@ function DashboardPage() {
           </>
         ) : (
           <>
-            <StatCard icon={ArrowDownToLine} label="Income (this month)" value={formatCurrency(income, currency)} accent="text-emerald-500" />
-            <StatCard icon={ArrowUpFromLine} label="Expenses (this month)" value={formatCurrency(expense, currency)} accent="text-red-500" />
-            <StatCard icon={Wallet} label="Net savings" value={formatCurrency(netSavings, currency)} accent={netSavings >= 0 ? "text-emerald-500" : "text-red-500"} />
-            <StatCard icon={PiggyBank} label="Biggest jar" value={biggestJar ? formatCurrency(Number(biggestJar.balance), currency) : "—"} sub={biggestJar?.name ?? "No jars"} />
+            <StatCard icon={ArrowDownToLine} label={`${t("dashboard.totalIncome")} (${t("dashboard.thisMonth")})`} value={formatCurrency(income, currency)} accent="text-emerald-500" />
+            <StatCard icon={ArrowUpFromLine} label={`${t("dashboard.totalExpenses")} (${t("dashboard.thisMonth")})`} value={formatCurrency(expense, currency)} accent="text-red-500" />
+            <StatCard icon={Wallet} label={t("dashboard.netSavings")} value={formatCurrency(netSavings, currency)} accent={netSavings >= 0 ? "text-emerald-500" : "text-red-500"} />
+            <StatCard icon={PiggyBank} label={t("dashboard.biggestJar")} value={biggestJar ? formatCurrency(Number(biggestJar.balance), currency) : "—"} sub={biggestJar?.name ?? "—"} />
           </>
         )}
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <ChartCard title="Expenses by jar" subtitle="This month">
+        <ChartCard title={t("dashboard.expensesByJar")} subtitle={t("dashboard.thisMonth")}>
           {expensePieData.length === 0 ? <EmptyChart label="No expenses yet" /> : (
             <ResponsiveContainer width="100%" height={240}>
               <PieChart>
@@ -182,7 +184,7 @@ function DashboardPage() {
           )}
         </ChartCard>
 
-        <ChartCard title="Income vs expenses" subtitle="Last 6 months">
+        <ChartCard title={t("dashboard.incomeVsExpenses")} subtitle={t("dashboard.last6Months")}>
           <ResponsiveContainer width="100%" height={240}>
             <BarChart data={trend}>
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
@@ -196,7 +198,7 @@ function DashboardPage() {
           </ResponsiveContainer>
         </ChartCard>
 
-        <ChartCard title="Jar allocation" subtitle={`Total ${formatCurrency(totalBalance, currency)}`}>
+        <ChartCard title={t("dashboard.jarAllocation")} subtitle={`${formatCurrency(totalBalance, currency)}`}>
           {allocationData.length === 0 ? <EmptyChart label="No balance yet" /> : (
             <ResponsiveContainer width="100%" height={240}>
               <PieChart>
@@ -213,11 +215,11 @@ function DashboardPage() {
       <div className="grid gap-4 lg:grid-cols-3">
         <div className="rounded-2xl border bg-card p-5 shadow-sm lg:col-span-2">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-medium">Recent activity</h2>
-            <span className="text-xs text-muted-foreground">Last 5 transactions</span>
+            <h2 className="text-lg font-medium">{t("dashboard.recentTransactions")}</h2>
+            <span className="text-xs text-muted-foreground">{t("dashboard.last5")}</span>
           </div>
           {recent.length === 0 ? (
-            <p className="py-8 text-center text-sm text-muted-foreground">No transactions yet.</p>
+            <p className="py-8 text-center text-sm text-muted-foreground">{t("dashboard.noTransactions")}</p>
           ) : (
             <ul className="divide-y">
               {recent.map((t, i) => (
@@ -250,7 +252,7 @@ function DashboardPage() {
         </div>
 
         <div className="rounded-2xl border bg-card p-5 shadow-sm">
-          <h2 className="mb-4 text-lg font-medium">Your jars</h2>
+          <h2 className="mb-4 text-lg font-medium">{t("dashboard.yourJars")}</h2>
           <div className="space-y-3">
             {jars.map((j) => {
               const pct = totalBalance > 0 ? (Number(j.balance) / totalBalance) * 100 : 0;
