@@ -131,6 +131,8 @@ export type Database = {
           currency: string
           full_name: string | null
           id: string
+          monthly_reset: boolean
+          notification_prefs: Json
           theme_preference: string
           updated_at: string
         }
@@ -140,6 +142,8 @@ export type Database = {
           currency?: string
           full_name?: string | null
           id: string
+          monthly_reset?: boolean
+          notification_prefs?: Json
           theme_preference?: string
           updated_at?: string
         }
@@ -149,6 +153,8 @@ export type Database = {
           currency?: string
           full_name?: string | null
           id?: string
+          monthly_reset?: boolean
+          notification_prefs?: Json
           theme_preference?: string
           updated_at?: string
         }
