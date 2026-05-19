@@ -12,8 +12,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ArrowRightLeft, Settings2, ArrowRight } from "lucide-react";
+import { ArrowRightLeft, Settings2, ArrowRight, AlertTriangle } from "lucide-react";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 export const JAR_EMOJIS: Record<string, string> = {
   NEC: "🏠",
@@ -88,14 +89,24 @@ function JarsPage() {
         {jars.map((j, i) => {
           const goal = (monthlyIncome * Number(j.percentage)) / 100;
           const pct = goal > 0 ? Math.max(0, Math.min(100, (Number(j.balance) / goal) * 100)) : 0;
+          const lowBalance = goal > 0 && Number(j.balance) < goal * 0.1;
           return (
             <motion.div
               key={j.id}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: i * 0.04 }}
-              className="flex flex-col rounded-2xl border bg-card p-5 shadow-sm"
+              className={cn(
+                "flex flex-col rounded-2xl border bg-card p-5 shadow-sm transition-colors",
+                lowBalance && "border-amber-500/50",
+              )}
             >
+              {lowBalance && (
+                <div className="-mx-5 -mt-5 mb-4 flex items-center gap-2 rounded-t-2xl border-b border-amber-500/30 bg-amber-500/10 px-5 py-2 text-xs font-medium text-amber-600 dark:text-amber-400">
+                  <AlertTriangle className="h-3.5 w-3.5" />
+                  Low balance — under 10% of this month's allocation
+                </div>
+              )}
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
                   <div className="text-3xl leading-none">{JAR_EMOJIS[j.key] ?? "🫙"}</div>
