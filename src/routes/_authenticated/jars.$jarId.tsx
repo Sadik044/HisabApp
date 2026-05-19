@@ -126,7 +126,7 @@ function JarDetailPage() {
               <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <Tooltip
                 contentStyle={{ background: "hsl(var(--popover))", border: "1px solid hsl(var(--border))", borderRadius: 8 }}
-                formatter={(v: number) => formatCurrency(v, currency)}
+                formatter={(v) => formatCurrency(Number(v) || 0, currency)}
               />
               <Line type="monotone" dataKey="balance" stroke={jar.color || "#10B981"} strokeWidth={2} dot={{ r: 3 }} />
             </LineChart>
