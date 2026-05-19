@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { motion } from "framer-motion";
 import { ContactSection } from "@/components/contact-section";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { useTranslation } from "react-i18next";
 import { SiteFooter } from "@/components/site-footer";
 import {
   Wallet,
