@@ -254,6 +254,9 @@ function Index() {
         </div>
       </section>
 
+      {/* Contact */}
+      <ContactSection />
+
       {/* CTA */}
       <section className="container mx-auto px-6 py-24">
         <div className="relative overflow-hidden rounded-3xl border bg-gradient-to-br from-primary/10 via-card to-emerald-500/10 p-10 text-center md:p-16">
