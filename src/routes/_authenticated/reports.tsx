@@ -119,7 +119,7 @@ function ReportsPage() {
               <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
               <XAxis dataKey="label" className="text-xs" />
               <YAxis className="text-xs" />
-              <Tooltip formatter={(v: number) => formatCurrency(v, currency)} />
+              <Tooltip formatter={(v) => formatCurrency(Number(v), currency)} />
               <Legend />
               <Line type="monotone" dataKey="income" stroke="#10B981" strokeWidth={2} />
               <Line type="monotone" dataKey="expense" stroke="#EF4444" strokeWidth={2} />
@@ -137,7 +137,7 @@ function ReportsPage() {
                 <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
                 <XAxis dataKey="label" className="text-xs" />
                 <YAxis className="text-xs" />
-                <Tooltip formatter={(v: number) => formatCurrency(v, currency)} />
+                <Tooltip formatter={(v) => formatCurrency(Number(v), currency)} />
                 <Legend />
                 <Bar dataKey="income" fill="#10B981" radius={[6, 6, 0, 0]} />
                 <Bar dataKey="expense" fill="#EF4444" radius={[6, 6, 0, 0]} />
@@ -155,7 +155,7 @@ function ReportsPage() {
                   <Pie data={jarDist} dataKey="value" nameKey="name" innerRadius={50} outerRadius={90} paddingAngle={2}>
                     {jarDist.map((d) => <Cell key={d.name} fill={d.color} />)}
                   </Pie>
-                  <Tooltip formatter={(v: number) => formatCurrency(v, currency)} />
+                  <Tooltip formatter={(v) => formatCurrency(Number(v), currency)} />
                   <Legend />
                 </PieChart>
               </ResponsiveContainer>
