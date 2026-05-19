@@ -22,6 +22,7 @@ import { Route as AuthenticatedJarsRouteImport } from './routes/_authenticated/j
 import { Route as AuthenticatedIncomeRouteImport } from './routes/_authenticated/income'
 import { Route as AuthenticatedExpensesRouteImport } from './routes/_authenticated/expenses'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedJarsJarIdRouteImport } from './routes/_authenticated/jars.$jarId'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -87,6 +88,11 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedJarsJarIdRoute = AuthenticatedJarsJarIdRouteImport.update({
+  id: '/$jarId',
+  path: '/$jarId',
+  getParentRoute: () => AuthenticatedJarsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -97,10 +103,11 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/expenses': typeof AuthenticatedExpensesRoute
   '/income': typeof AuthenticatedIncomeRoute
-  '/jars': typeof AuthenticatedJarsRoute
+  '/jars': typeof AuthenticatedJarsRouteWithChildren
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/jars/$jarId': typeof AuthenticatedJarsJarIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -111,10 +118,11 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/expenses': typeof AuthenticatedExpensesRoute
   '/income': typeof AuthenticatedIncomeRoute
-  '/jars': typeof AuthenticatedJarsRoute
+  '/jars': typeof AuthenticatedJarsRouteWithChildren
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/jars/$jarId': typeof AuthenticatedJarsJarIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -127,10 +135,11 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/expenses': typeof AuthenticatedExpensesRoute
   '/_authenticated/income': typeof AuthenticatedIncomeRoute
-  '/_authenticated/jars': typeof AuthenticatedJarsRoute
+  '/_authenticated/jars': typeof AuthenticatedJarsRouteWithChildren
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/jars/$jarId': typeof AuthenticatedJarsJarIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -147,6 +156,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/jars/$jarId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -161,6 +171,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/jars/$jarId'
   id:
     | '__root__'
     | '/'
@@ -176,6 +187,7 @@ export interface FileRouteTypes {
     | '/_authenticated/profile'
     | '/_authenticated/reports'
     | '/_authenticated/settings'
+    | '/_authenticated/jars/$jarId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -280,14 +292,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/jars/$jarId': {
+      id: '/_authenticated/jars/$jarId'
+      path: '/$jarId'
+      fullPath: '/jars/$jarId'
+      preLoaderRoute: typeof AuthenticatedJarsJarIdRouteImport
+      parentRoute: typeof AuthenticatedJarsRoute
+    }
   }
 }
+
+interface AuthenticatedJarsRouteChildren {
+  AuthenticatedJarsJarIdRoute: typeof AuthenticatedJarsJarIdRoute
+}
+
+const AuthenticatedJarsRouteChildren: AuthenticatedJarsRouteChildren = {
+  AuthenticatedJarsJarIdRoute: AuthenticatedJarsJarIdRoute,
+}
+
+const AuthenticatedJarsRouteWithChildren =
+  AuthenticatedJarsRoute._addFileChildren(AuthenticatedJarsRouteChildren)
 
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedExpensesRoute: typeof AuthenticatedExpensesRoute
   AuthenticatedIncomeRoute: typeof AuthenticatedIncomeRoute
-  AuthenticatedJarsRoute: typeof AuthenticatedJarsRoute
+  AuthenticatedJarsRoute: typeof AuthenticatedJarsRouteWithChildren
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
@@ -297,7 +327,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedExpensesRoute: AuthenticatedExpensesRoute,
   AuthenticatedIncomeRoute: AuthenticatedIncomeRoute,
-  AuthenticatedJarsRoute: AuthenticatedJarsRoute,
+  AuthenticatedJarsRoute: AuthenticatedJarsRouteWithChildren,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
