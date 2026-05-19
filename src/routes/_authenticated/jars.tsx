@@ -5,6 +5,15 @@ import { useAuth } from "@/hooks/use-auth";
 import { formatCurrency } from "@/lib/format";
 import { motion } from "framer-motion";
 
+const JAR_DESCRIPTIONS: Record<string, string> = {
+  NEC: "Day-to-day essentials — rent, food, bills, transport.",
+  LTSS: "Save up for big future purchases like a car, home, or vacation.",
+  EDU: "Invest in yourself — books, courses, coaching, skills.",
+  PLAY: "Guilt-free fun — treat yourself and enjoy life today.",
+  FFA: "Financial freedom — investments and passive income, never spent.",
+  GIVE: "Generosity — charity, gifts, and helping others.",
+};
+
 export const Route = createFileRoute("/_authenticated/jars")({
   head: () => ({ meta: [{ title: "Jars — JarWise" }] }),
   component: JarsPage,
@@ -56,6 +65,9 @@ function JarsPage() {
                 </div>
                 <div className="h-3 w-3 rounded-full" style={{ backgroundColor: j.color }} />
               </div>
+              <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                {JAR_DESCRIPTIONS[j.key] ?? ""}
+              </p>
               <div className="mt-3 text-3xl font-semibold">{formatCurrency(Number(j.balance), currency)}</div>
               <div className="mt-4 space-y-1.5">
                 {items.length === 0 && <div className="text-xs text-muted-foreground">No recent activity</div>}
