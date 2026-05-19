@@ -20,7 +20,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "JarWise — Personal Finance with the 6 Jar Method" },
-      { name: "description", content: "Take control of your money with JarWise. Allocate every dollar across 6 purpose-driven jars and build wealth on autopilot." },
+      { name: "description", content: "Take control of your money with JarWise. Allocate every money across 6 purpose-driven jars and build wealth on autopilot." },
     ],
   }),
   component: Index,
@@ -67,7 +67,7 @@ function Index() {
             <Sparkles className="h-3 w-3 text-primary" /> The proven 6 Jar Money Method
           </div>
           <h1 className="text-balance text-5xl font-semibold tracking-tight md:text-6xl">
-            Every dollar with a <span className="text-primary">purpose</span>.
+            Every Money with a <span className="text-primary">purpose</span>.
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-balance text-lg text-muted-foreground">
             JarWise turns T. Harv Eker&apos;s 6 Jar system into a beautifully simple app — track income, expenses, and watch your jars grow.
