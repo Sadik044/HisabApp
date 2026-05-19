@@ -1,127 +1,309 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { motion } from "framer-motion";
 import {
-  Home as HomeIcon,
-  PiggyBank,
-  GraduationCap,
-  PartyPopper,
-  TrendingUp,
-  Heart,
   Wallet,
   ShieldCheck,
-  BarChart3,
   Sparkles,
+  Target,
+  FileDown,
+  Moon,
+  Receipt,
+  PieChart,
+  ArrowRight,
+  Star,
+  Plus,
+  Shuffle,
+  LineChart,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "JarWise — Personal Finance with the 6 Jar Method" },
-      { name: "description", content: "Take control of your money with JarWise. Allocate every money across 6 purpose-driven jars and build wealth on autopilot." },
+      { title: "JarWise — Take Control of Your Money with the 6 Jar Method" },
+      { name: "description", content: "JarWise turns the proven 6 Jar Money Method into a beautiful app. Auto-split income, track expenses, and grow real wealth on autopilot." },
+      { property: "og:title", content: "JarWise — Take Control of Your Money with the 6 Jar Method" },
+      { property: "og:description", content: "Auto-split income across 6 purpose-driven jars, track spending, and grow wealth on autopilot." },
     ],
   }),
   component: Index,
 });
 
 const jars = [
-  { key: "NEC", name: "Necessities", pct: 55, icon: HomeIcon, color: "text-emerald-500" },
-  { key: "LTSS", name: "Long-Term Savings", pct: 10, icon: PiggyBank, color: "text-blue-500" },
-  { key: "EDU", name: "Education", pct: 10, icon: GraduationCap, color: "text-violet-500" },
-  { key: "PLAY", name: "Play", pct: 10, icon: PartyPopper, color: "text-amber-500" },
-  { key: "FFA", name: "Financial Freedom", pct: 10, icon: TrendingUp, color: "text-red-500" },
-  { key: "GIVE", name: "Give", pct: 5, icon: Heart, color: "text-pink-500" },
+  { emoji: "🏠", name: "Necessities", pct: 55, color: "text-emerald-500", bg: "bg-emerald-500/10", bar: "bg-emerald-500", purpose: "Rent, food, bills & daily essentials." },
+  { emoji: "💰", name: "Financial Freedom", pct: 10, color: "text-red-500", bg: "bg-red-500/10", bar: "bg-red-500", purpose: "Investments that build passive income." },
+  { emoji: "📚", name: "Education", pct: 10, color: "text-violet-500", bg: "bg-violet-500/10", bar: "bg-violet-500", purpose: "Courses, books & skill upgrades." },
+  { emoji: "🎯", name: "Long-term Saving", pct: 10, color: "text-blue-500", bg: "bg-blue-500/10", bar: "bg-blue-500", purpose: "Big goals — house, car, travel." },
+  { emoji: "🎮", name: "Play", pct: 10, color: "text-amber-500", bg: "bg-amber-500/10", bar: "bg-amber-500", purpose: "Guilt-free fun & entertainment." },
+  { emoji: "🤝", name: "Give", pct: 5, color: "text-pink-500", bg: "bg-pink-500/10", bar: "bg-pink-500", purpose: "Charity, gifts & giving back." },
+];
+
+const features = [
+  { icon: Shuffle, title: "Auto Jar Split", body: "Every income entry distributes across your 6 jars automatically — no math required." },
+  { icon: Receipt, title: "Expense Tracking", body: "Log expenses against any jar with category, notes, and instant balance updates." },
+  { icon: PieChart, title: "Visual Analytics", body: "Beautiful charts show where your money goes and how each jar grows." },
+  { icon: Target, title: "Custom Goals", body: "Tune jar percentages to match your life — savings sprint or freedom focus." },
+  { icon: FileDown, title: "Reports Export", body: "Export your monthly reports as PDF or CSV in a single click." },
+  { icon: Moon, title: "Dark Mode", body: "Switch between light and dark themes — easy on the eyes, day or night." },
+];
+
+const steps = [
+  { icon: Plus, title: "Add Income", body: "Log salary, freelance or any earning — once, in seconds." },
+  { icon: Shuffle, title: "Auto Split", body: "JarWise allocates funds across your 6 jars by percentage." },
+  { icon: LineChart, title: "Track & Grow", body: "Spend mindfully and watch your savings climb every month." },
+];
+
+const testimonials = [
+  { name: "Ayesha Rahman", role: "Freelance Designer", quote: "JarWise made budgeting feel effortless. I finally saved for my first trip abroad without stress." },
+  { name: "Tanvir Hasan", role: "Software Engineer", quote: "The auto-split is genius. My Financial Freedom jar grows every month without me thinking about it." },
+  { name: "Mehnaz Karim", role: "Small Business Owner", quote: "Clean, fast, and beautiful. The reports alone are worth it — I share them with my accountant." },
 ];
 
 function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="container mx-auto flex items-center justify-between px-6 py-5">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary text-primary-foreground">
-            <Wallet className="h-5 w-5" />
+      <header className="sticky top-0 z-40 border-b bg-background/70 backdrop-blur-xl">
+        <div className="container mx-auto flex items-center justify-between px-6 py-4">
+          <Link to="/" className="flex items-center gap-2">
+            <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary text-primary-foreground">
+              <Wallet className="h-5 w-5" />
+            </div>
+            <span className="font-semibold tracking-tight">JarWise</span>
+          </Link>
+          <nav className="hidden items-center gap-6 md:flex">
+            <a href="#features" className="text-sm text-muted-foreground hover:text-foreground">Features</a>
+            <a href="#how" className="text-sm text-muted-foreground hover:text-foreground">How it works</a>
+            <a href="#jars" className="text-sm text-muted-foreground hover:text-foreground">The 6 Jars</a>
+            <a href="#testimonials" className="text-sm text-muted-foreground hover:text-foreground">Reviews</a>
+          </nav>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Button asChild variant="ghost" className="hidden sm:inline-flex"><Link to="/login">Log in</Link></Button>
+            <Button asChild><Link to="/register">Get started</Link></Button>
           </div>
-          <span className="font-semibold tracking-tight">JarWise</span>
-        </Link>
-        <nav className="hidden items-center gap-6 md:flex">
-          <a href="#features" className="text-sm text-muted-foreground hover:text-foreground">Features</a>
-          <a href="#jars" className="text-sm text-muted-foreground hover:text-foreground">The 6 Jars</a>
-        </nav>
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <Button asChild variant="ghost"><Link to="/login">Log in</Link></Button>
-          <Button asChild><Link to="/register">Get started</Link></Button>
         </div>
       </header>
 
-      <section className="container mx-auto px-6 pt-16 pb-24 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mx-auto max-w-3xl"
-        >
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border bg-card px-3 py-1 text-xs">
-            <Sparkles className="h-3 w-3 text-primary" /> The proven 6 Jar Money Method
-          </div>
-          <h1 className="text-balance text-5xl font-semibold tracking-tight md:text-6xl">
-            Every Money with a <span className="text-primary">purpose</span>.
-          </h1>
-          <p className="mx-auto mt-5 max-w-xl text-balance text-lg text-muted-foreground">
-            JarWise turns T. Harv Eker&apos;s 6 Jar system into a beautifully simple app — track income, expenses, and watch your jars grow.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Button asChild size="lg"><Link to="/register">Start free</Link></Button>
-            <Button asChild size="lg" variant="outline"><Link to="/login">I have an account</Link></Button>
-          </div>
-        </motion.div>
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute left-1/2 top-[-10%] h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-primary/20 blur-3xl" />
+          <div className="absolute right-[10%] top-[20%] h-[300px] w-[300px] rounded-full bg-emerald-500/10 blur-3xl" />
+        </div>
+        <div className="container mx-auto px-6 pt-20 pb-24 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mx-auto max-w-3xl"
+          >
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border bg-card px-3 py-1 text-xs">
+              <Sparkles className="h-3 w-3 text-primary" /> The proven 6 Jar Money Method
+            </div>
+            <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
+              Take Control of Your Money with the{" "}
+              <span className="bg-gradient-to-r from-primary to-emerald-500 bg-clip-text text-transparent">6 Jar Method</span>
+            </h1>
+            <p className="mx-auto mt-5 max-w-xl text-balance text-lg text-muted-foreground">
+              Auto-split every income across 6 purpose-driven jars, track expenses effortlessly, and grow real wealth — without spreadsheets.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <Button asChild size="lg" className="gap-2">
+                <Link to="/register">Get Started Free <ArrowRight className="h-4 w-4" /></Link>
+              </Button>
+              <Button asChild size="lg" variant="outline">
+                <a href="#features">See How It Works</a>
+              </Button>
+            </div>
+            <div className="mt-6 flex items-center justify-center gap-1 text-xs text-muted-foreground">
+              {Array.from({ length: 5 }).map((_, k) => (
+                <Star key={k} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+              ))}
+              <span className="ml-2">Loved by 10,000+ mindful spenders</span>
+            </div>
+          </motion.div>
+        </div>
       </section>
 
-      <section id="jars" className="container mx-auto px-6 pb-20">
-        <h2 className="mb-10 text-center text-3xl font-semibold tracking-tight">Your money, six jars</h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {jars.map((j, i) => (
+      {/* Features */}
+      <section id="features" className="container mx-auto px-6 py-24">
+        <div className="mx-auto mb-14 max-w-2xl text-center">
+          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Everything you need to master your money</h2>
+          <p className="mt-3 text-muted-foreground">Powerful features wrapped in a beautifully simple interface.</p>
+        </div>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {features.map((f, i) => (
             <motion.div
-              key={j.key}
-              initial={{ opacity: 0, y: 10 }}
+              key={f.title}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.35, delay: i * 0.05 }}
-              className="rounded-2xl border bg-card p-6 shadow-sm"
+              className="group rounded-2xl border bg-card p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
             >
-              <div className="flex items-center justify-between">
-                <j.icon className={`h-6 w-6 ${j.color}`} />
-                <span className="rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium">{j.pct}%</span>
+              <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                <f.icon className="h-5 w-5" />
               </div>
-              <div className="mt-4 text-lg font-medium">{j.name}</div>
-              <div className="text-sm text-muted-foreground">{j.key}</div>
+              <h3 className="mt-5 text-lg font-medium">{f.title}</h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{f.body}</p>
             </motion.div>
           ))}
         </div>
       </section>
 
-      <section id="features" className="container mx-auto px-6 pb-24">
-        <div className="grid gap-6 md:grid-cols-3">
-          {[
-            { icon: Wallet, title: "Auto-distribute income", body: "Every income entry splits across your 6 jars automatically." },
-            { icon: BarChart3, title: "Advanced reports", body: "Trends, breakdowns, and CSV/PDF export." },
-            { icon: ShieldCheck, title: "Private & secure", body: "Your data, your account. Encrypted and isolated." },
-          ].map((f) => (
-            <div key={f.title} className="rounded-2xl border bg-card p-6">
-              <f.icon className="h-6 w-6 text-primary" />
-              <h3 className="mt-4 font-medium">{f.title}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{f.body}</p>
-            </div>
+      {/* How it works */}
+      <section id="how" className="border-y bg-muted/30">
+        <div className="container mx-auto px-6 py-24">
+          <div className="mx-auto mb-14 max-w-2xl text-center">
+            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">How it works</h2>
+            <p className="mt-3 text-muted-foreground">Three simple steps to financial clarity.</p>
+          </div>
+          <div className="relative grid gap-8 md:grid-cols-3">
+            {steps.map((s, i) => (
+              <motion.div
+                key={s.title}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: i * 0.08 }}
+                className="relative rounded-2xl border bg-card p-8 text-center shadow-sm"
+              >
+                <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-primary to-emerald-500 text-primary-foreground">
+                  <s.icon className="h-6 w-6" />
+                </div>
+                <div className="mt-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">Step {i + 1}</div>
+                <h3 className="mt-2 text-xl font-medium">{s.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{s.body}</p>
+                {i < steps.length - 1 && (
+                  <ArrowRight className="absolute right-[-20px] top-1/2 hidden h-6 w-6 -translate-y-1/2 text-muted-foreground/40 md:block" />
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 6 Jars */}
+      <section id="jars" className="container mx-auto px-6 py-24">
+        <div className="mx-auto mb-14 max-w-2xl text-center">
+          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Meet your 6 jars</h2>
+          <p className="mt-3 text-muted-foreground">Every taka gets a job — the moment it lands.</p>
+        </div>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {jars.map((j, i) => (
+            <motion.div
+              key={j.name}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.35, delay: i * 0.05 }}
+              className="rounded-2xl border bg-card p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
+            >
+              <div className="flex items-center justify-between">
+                <div className={`grid h-12 w-12 place-items-center rounded-xl ${j.bg} text-2xl`}>{j.emoji}</div>
+                <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${j.bg} ${j.color}`}>{j.pct}%</span>
+              </div>
+              <div className="mt-5 text-lg font-medium">{j.name}</div>
+              <p className="mt-1 text-sm text-muted-foreground">{j.purpose}</p>
+              <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-secondary">
+                <div className={`h-full rounded-full ${j.bar}`} style={{ width: `${j.pct}%` }} />
+              </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
-      <footer className="border-t">
-        <div className="container mx-auto flex items-center justify-between px-6 py-6 text-sm text-muted-foreground">
-          <span>© {new Date().getFullYear()} JarWise</span>
-          <span>Built on the 6 Jar Money Method</span>
+      {/* Testimonials */}
+      <section id="testimonials" className="border-y bg-muted/30">
+        <div className="container mx-auto px-6 py-24">
+          <div className="mx-auto mb-14 max-w-2xl text-center">
+            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Loved by mindful spenders</h2>
+            <p className="mt-3 text-muted-foreground">Real stories from people taking control of their money.</p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {testimonials.map((t, i) => (
+              <motion.div
+                key={t.name}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: i * 0.08 }}
+                className="rounded-2xl border bg-card p-6 shadow-sm"
+              >
+                <div className="flex gap-0.5">
+                  {Array.from({ length: 5 }).map((_, k) => (
+                    <Star key={k} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <p className="mt-4 text-sm leading-relaxed">&ldquo;{t.quote}&rdquo;</p>
+                <div className="mt-6 flex items-center gap-3">
+                  <div className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-primary to-emerald-500 text-sm font-semibold text-primary-foreground">
+                    {t.name.split(" ").map((s) => s[0]).join("")}
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium">{t.name}</div>
+                    <div className="text-xs text-muted-foreground">{t.role}</div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="container mx-auto px-6 py-24">
+        <div className="relative overflow-hidden rounded-3xl border bg-gradient-to-br from-primary/10 via-card to-emerald-500/10 p-10 text-center md:p-16">
+          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Ready to give every taka a purpose?</h2>
+          <p className="mx-auto mt-3 max-w-xl text-muted-foreground">Join thousands building better money habits with JarWise. Free forever for personal use.</p>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Button asChild size="lg" className="gap-2"><Link to="/register">Get Started Free <ArrowRight className="h-4 w-4" /></Link></Button>
+            <Button asChild size="lg" variant="outline"><Link to="/login">Log in</Link></Button>
+          </div>
+        </div>
+      </section>
+
+      <footer className="border-t bg-card/30">
+        <div className="container mx-auto px-6 py-12">
+          <div className="grid gap-8 md:grid-cols-4">
+            <div className="md:col-span-1">
+              <Link to="/" className="flex items-center gap-2">
+                <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary text-primary-foreground">
+                  <Wallet className="h-5 w-5" />
+                </div>
+                <span className="font-semibold tracking-tight">JarWise</span>
+              </Link>
+              <p className="mt-3 text-sm text-muted-foreground">Personal finance, with purpose.</p>
+            </div>
+            <div>
+              <div className="text-sm font-medium">Product</div>
+              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                <li><a href="#features" className="hover:text-foreground">Features</a></li>
+                <li><a href="#how" className="hover:text-foreground">How it works</a></li>
+                <li><a href="#jars" className="hover:text-foreground">The 6 Jars</a></li>
+              </ul>
+            </div>
+            <div>
+              <div className="text-sm font-medium">Company</div>
+              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                <li><a href="#testimonials" className="hover:text-foreground">Reviews</a></li>
+                <li><a href="#" className="hover:text-foreground">About</a></li>
+                <li><a href="#" className="hover:text-foreground">Contact</a></li>
+              </ul>
+            </div>
+            <div>
+              <div className="text-sm font-medium">Get started</div>
+              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                <li><Link to="/register" className="hover:text-foreground">Sign up</Link></li>
+                <li><Link to="/login" className="hover:text-foreground">Log in</Link></li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t pt-6 text-xs text-muted-foreground sm:flex-row">
+            <span>© {new Date().getFullYear()} JarWise. All rights reserved.</span>
+            <span className="flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> Built on the 6 Jar Money Method</span>
+          </div>
         </div>
       </footer>
     </div>
