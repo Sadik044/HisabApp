@@ -2,9 +2,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { motion } from "framer-motion";
+import { ContactSection } from "@/components/contact-section";
+import { SiteFooter } from "@/components/site-footer";
 import {
   Wallet,
-  ShieldCheck,
   Sparkles,
   Target,
   FileDown,
@@ -76,6 +77,7 @@ function Index() {
             <a href="#how" className="text-sm text-muted-foreground hover:text-foreground">How it works</a>
             <a href="#jars" className="text-sm text-muted-foreground hover:text-foreground">The 6 Jars</a>
             <a href="#testimonials" className="text-sm text-muted-foreground hover:text-foreground">Reviews</a>
+            <a href="#contact" className="text-sm text-muted-foreground hover:text-foreground">Contact</a>
           </nav>
           <div className="flex items-center gap-2">
             <ThemeToggle />
@@ -252,6 +254,9 @@ function Index() {
         </div>
       </section>
 
+      {/* Contact */}
+      <ContactSection />
+
       {/* CTA */}
       <section className="container mx-auto px-6 py-24">
         <div className="relative overflow-hidden rounded-3xl border bg-gradient-to-br from-primary/10 via-card to-emerald-500/10 p-10 text-center md:p-16">
@@ -264,48 +269,7 @@ function Index() {
         </div>
       </section>
 
-      <footer className="border-t bg-card/30">
-        <div className="container mx-auto px-6 py-12">
-          <div className="grid gap-8 md:grid-cols-4">
-            <div className="md:col-span-1">
-              <Link to="/" className="flex items-center gap-2">
-                <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary text-primary-foreground">
-                  <Wallet className="h-5 w-5" />
-                </div>
-                <span className="font-semibold tracking-tight">JarWise</span>
-              </Link>
-              <p className="mt-3 text-sm text-muted-foreground">Personal finance, with purpose.</p>
-            </div>
-            <div>
-              <div className="text-sm font-medium">Product</div>
-              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                <li><a href="#features" className="hover:text-foreground">Features</a></li>
-                <li><a href="#how" className="hover:text-foreground">How it works</a></li>
-                <li><a href="#jars" className="hover:text-foreground">The 6 Jars</a></li>
-              </ul>
-            </div>
-            <div>
-              <div className="text-sm font-medium">Company</div>
-              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                <li><a href="#testimonials" className="hover:text-foreground">Reviews</a></li>
-                <li><a href="#" className="hover:text-foreground">About</a></li>
-                <li><a href="#" className="hover:text-foreground">Contact</a></li>
-              </ul>
-            </div>
-            <div>
-              <div className="text-sm font-medium">Get started</div>
-              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                <li><Link to="/register" className="hover:text-foreground">Sign up</Link></li>
-                <li><Link to="/login" className="hover:text-foreground">Log in</Link></li>
-              </ul>
-            </div>
-          </div>
-          <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t pt-6 text-xs text-muted-foreground sm:flex-row">
-            <span>© {new Date().getFullYear()} JarWise. All rights reserved.</span>
-            <span className="flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" /> Built on the 6 Jar Money Method</span>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
