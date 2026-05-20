@@ -6,8 +6,8 @@ import { ContactSection } from "@/components/contact-section";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { useTranslation } from "react-i18next";
 import { SiteFooter } from "@/components/site-footer";
+import { BrandLogo } from "@/components/brand-logo";
 import {
-  Wallet,
   Sparkles,
   Target,
   FileDown,
@@ -69,11 +69,8 @@ function Index() {
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-40 border-b bg-background/70 backdrop-blur-xl">
         <div className="container mx-auto flex items-center justify-between px-6 py-4">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary text-primary-foreground">
-              <Wallet className="h-5 w-5" />
-            </div>
-            <span className="font-semibold tracking-tight">HisabApp</span>
+          <Link to="/">
+            <BrandLogo />
           </Link>
           <nav className="hidden items-center gap-6 md:flex">
             <a href="#features" className="text-sm text-muted-foreground hover:text-foreground">{t("nav.features")}</a>
