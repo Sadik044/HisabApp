@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 import { applyLangSideEffects, setAppLanguage, type AppLanguage } from "@/lib/i18n";
@@ -14,6 +14,10 @@ import { applyLangSideEffects, setAppLanguage, type AppLanguage } from "@/lib/i1
 export function LanguageSync() {
   const { i18n } = useTranslation();
   const { user } = useAuth();
+  const queryClient = useQueryClient();
+  // Track which user's profile language we've already adopted, so we don't
+  // keep overwriting the user's in-session toggle with the stored value.
+  const adoptedForUser = useRef<string | null>(null);
 
   // On client mount, adopt the persisted language from localStorage. This
   // runs AFTER hydration so SSR/CSR markup matches on the first render.
@@ -51,12 +55,35 @@ export function LanguageSync() {
     },
   });
 
+  // Adopt the stored profile language exactly ONCE per signed-in user.
+  // After that, the navbar switcher is the source of truth for this session
+  // (it writes through to localStorage + profiles).
   useEffect(() => {
-    if (!data) return;
-    if (data !== i18n.resolvedLanguage) {
-      setAppLanguage(data);
+    if (!user) {
+      adoptedForUser.current = null;
+      return;
     }
-  }, [data, i18n.resolvedLanguage]);
+    if (!data) return;
+    if (adoptedForUser.current === user.id) return;
+    adoptedForUser.current = user.id;
+
+    // Prefer an explicit in-session choice from localStorage over the stored
+    // profile value, so toggling before/after login feels consistent.
+    const localChoice =
+      typeof window !== "undefined"
+        ? (localStorage.getItem("language") as AppLanguage | null)
+        : null;
+    const target: AppLanguage = localChoice ?? data;
+    if (target !== i18n.resolvedLanguage) {
+      setAppLanguage(target);
+    }
+    // Keep the cached profile value in sync with the resolved choice so the
+    // switcher doesn't see a stale value on next read.
+    if (target !== data) {
+      void supabase.from("profiles").update({ language: target }).eq("id", user.id);
+      queryClient.setQueryData(["profile-language", user.id], target);
+    }
+  }, [user, data, i18n, queryClient]);
 
   return null;
 }
