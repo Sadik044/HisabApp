@@ -14,7 +14,6 @@ import {
   Settings,
   User as UserIcon,
   LogOut,
-  Wallet,
   Menu,
   X,
   PanelLeftClose,
@@ -24,6 +23,7 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { BrandMark } from "@/components/brand-logo";
 
 const nav = [
   { to: "/dashboard", labelKey: "common.dashboard", icon: LayoutDashboard },
@@ -63,10 +63,8 @@ export function AppShell() {
       {/* Mobile top bar */}
       <header className="sticky top-0 z-30 flex items-center justify-between border-b bg-background/80 px-4 py-3 backdrop-blur md:hidden">
         <Link to="/dashboard" className="flex items-center gap-2">
-          <div className="grid h-8 w-8 place-items-center rounded-lg bg-primary text-primary-foreground">
-            <Wallet className="h-4 w-4" />
-          </div>
-          <span className="font-semibold">HisabApp</span>
+          <BrandMark className="h-8 w-8" />
+          <span className="font-bold tracking-tight">HisabApp</span>
         </Link>
         <div className="flex items-center gap-1">
           <LanguageSwitcher />
@@ -87,10 +85,8 @@ export function AppShell() {
           )}
         >
           <div className={cn("hidden items-center gap-2 py-5 md:flex", collapsed ? "justify-center px-2" : "px-6")}>
-            <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary text-primary-foreground">
-              <Wallet className="h-5 w-5" />
-            </div>
-            {!collapsed && <span className="font-semibold tracking-tight">HisabApp</span>}
+            <BrandMark />
+            {!collapsed && <span className="font-bold tracking-tight">HisabApp</span>}
           </div>
           <nav className={cn("flex flex-col gap-1", collapsed ? "p-2" : "p-3")}>
             {nav.map((n) => {

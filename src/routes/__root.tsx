@@ -80,10 +80,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "JarWise — Smart Money with the 6 Jar Method" },
+      { title: "HisabApp — Smart Money with the 6 Jar Method" },
       { name: "description", content: "Manage your money the proven 6 Jar way. Track income, expenses, and grow your wealth across six purpose-driven jars." },
-      { name: "author", content: "JarWise" },
-      { property: "og:title", content: "JarWise — Smart Money with the 6 Jar Method" },
+      { name: "author", content: "HisabApp" },
+      { property: "og:title", content: "HisabApp — Smart Money with the 6 Jar Method" },
       { property: "og:description", content: "Manage your money the proven 6 Jar way." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -94,6 +94,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       {
         rel: "preconnect",
         href: "https://fonts.googleapis.com",
