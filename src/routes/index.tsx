@@ -33,29 +33,29 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const jars = [
-  { emoji: "🏠", name: "Necessities", pct: 55, color: "text-emerald-500", bg: "bg-emerald-500/10", bar: "bg-emerald-500", purpose: "Rent, food, bills & daily essentials." },
-  { emoji: "💰", name: "Financial Freedom", pct: 10, color: "text-red-500", bg: "bg-red-500/10", bar: "bg-red-500", purpose: "Investments that build passive income." },
-  { emoji: "📚", name: "Education", pct: 10, color: "text-violet-500", bg: "bg-violet-500/10", bar: "bg-violet-500", purpose: "Courses, books & skill upgrades." },
-  { emoji: "🎯", name: "Long-term Saving", pct: 10, color: "text-blue-500", bg: "bg-blue-500/10", bar: "bg-blue-500", purpose: "Big goals — house, car, travel." },
-  { emoji: "🎮", name: "Play", pct: 10, color: "text-amber-500", bg: "bg-amber-500/10", bar: "bg-amber-500", purpose: "Guilt-free fun & entertainment." },
-  { emoji: "🤝", name: "Give", pct: 5, color: "text-pink-500", bg: "bg-pink-500/10", bar: "bg-pink-500", purpose: "Charity, gifts & giving back." },
-];
+const jarMeta = [
+  { emoji: "🏠", key: "necessities", pct: 55, color: "text-emerald-500", bg: "bg-emerald-500/10", bar: "bg-emerald-500" },
+  { emoji: "💰", key: "financialFreedom", pct: 10, color: "text-red-500", bg: "bg-red-500/10", bar: "bg-red-500" },
+  { emoji: "📚", key: "education", pct: 10, color: "text-violet-500", bg: "bg-violet-500/10", bar: "bg-violet-500" },
+  { emoji: "🎯", key: "longTermSaving", pct: 10, color: "text-blue-500", bg: "bg-blue-500/10", bar: "bg-blue-500" },
+  { emoji: "🎮", key: "play", pct: 10, color: "text-amber-500", bg: "bg-amber-500/10", bar: "bg-amber-500" },
+  { emoji: "🤝", key: "give", pct: 5, color: "text-pink-500", bg: "bg-pink-500/10", bar: "bg-pink-500" },
+] as const;
 
-const features = [
-  { icon: Shuffle, title: "Auto Jar Split", body: "Every income entry distributes across your 6 jars automatically — no math required." },
-  { icon: Receipt, title: "Expense Tracking", body: "Log expenses against any jar with category, notes, and instant balance updates." },
-  { icon: PieChart, title: "Visual Analytics", body: "Beautiful charts show where your money goes and how each jar grows." },
-  { icon: Target, title: "Custom Goals", body: "Tune jar percentages to match your life — savings sprint or freedom focus." },
-  { icon: FileDown, title: "Reports Export", body: "Export your monthly reports as PDF or CSV in a single click." },
-  { icon: Moon, title: "Dark Mode", body: "Switch between light and dark themes — easy on the eyes, day or night." },
-];
+const featureMeta = [
+  { icon: Shuffle, key: "autoSplit" },
+  { icon: Receipt, key: "expense" },
+  { icon: PieChart, key: "analytics" },
+  { icon: Target, key: "goals" },
+  { icon: FileDown, key: "reports" },
+  { icon: Moon, key: "darkMode" },
+] as const;
 
-const steps = [
-  { icon: Plus, title: "Add Income", body: "Log salary, freelance or any earning — once, in seconds." },
-  { icon: Shuffle, title: "Auto Split", body: "HisabApp allocates funds across your 6 jars by percentage." },
-  { icon: LineChart, title: "Track & Grow", body: "Spend mindfully and watch your savings climb every month." },
-];
+const stepMeta = [
+  { icon: Plus, key: "addIncome" },
+  { icon: Shuffle, key: "autoSplit" },
+  { icon: LineChart, key: "trackGrow" },
+] as const;
 
 const testimonials = [
   { name: "Ayesha Rahman", role: "Freelance Designer", quote: "HisabApp made budgeting feel effortless. I finally saved for my first trip abroad without stress." },
@@ -75,8 +75,8 @@ function Index() {
           <nav className="hidden items-center gap-6 md:flex">
             <a href="#features" className="text-sm text-muted-foreground hover:text-foreground">{t("nav.features")}</a>
             <a href="#how" className="text-sm text-muted-foreground hover:text-foreground">{t("nav.howItWorks")}</a>
-            <a href="#jars" className="text-sm text-muted-foreground hover:text-foreground">The 6 Jars</a>
-            <a href="#testimonials" className="text-sm text-muted-foreground hover:text-foreground">Reviews</a>
+            <a href="#jars" className="text-sm text-muted-foreground hover:text-foreground">{t("nav.jars")}</a>
+            <a href="#testimonials" className="text-sm text-muted-foreground hover:text-foreground">{t("nav.reviews")}</a>
             <a href="#contact" className="text-sm text-muted-foreground hover:text-foreground">{t("nav.contact")}</a>
           </nav>
           <div className="flex items-center gap-2">
@@ -102,7 +102,7 @@ function Index() {
             className="mx-auto max-w-3xl"
           >
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border bg-card px-3 py-1 text-xs">
-              <Sparkles className="h-3 w-3 text-primary" /> The proven 6 Jar Money Method
+              <Sparkles className="h-3 w-3 text-primary" /> {t("landing.badge")}
             </div>
             <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
               {t("landing.headline")}
@@ -122,7 +122,7 @@ function Index() {
               {Array.from({ length: 5 }).map((_, k) => (
                 <Star key={k} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
               ))}
-              <span className="ml-2">Loved by 10,000+ mindful spenders</span>
+              <span className="ml-2">{t("landing.loved")}</span>
             </div>
           </motion.div>
         </div>
@@ -131,13 +131,13 @@ function Index() {
       {/* Features */}
       <section id="features" className="container mx-auto px-6 py-24">
         <div className="mx-auto mb-14 max-w-2xl text-center">
-          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Everything you need to master your money</h2>
-          <p className="mt-3 text-muted-foreground">Powerful features wrapped in a beautifully simple interface.</p>
+          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{t("landing.featuresTitle")}</h2>
+          <p className="mt-3 text-muted-foreground">{t("landing.featuresSub")}</p>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((f, i) => (
+          {featureMeta.map((f, i) => (
             <motion.div
-              key={f.title}
+              key={f.key}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -147,8 +147,8 @@ function Index() {
               <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                 <f.icon className="h-5 w-5" />
               </div>
-              <h3 className="mt-5 text-lg font-medium">{f.title}</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{f.body}</p>
+              <h3 className="mt-5 text-lg font-medium">{t(`features.${f.key}`)}</h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{t(`features.${f.key}Body`)}</p>
             </motion.div>
           ))}
         </div>
@@ -158,13 +158,13 @@ function Index() {
       <section id="how" className="border-y bg-muted/30">
         <div className="container mx-auto px-6 py-24">
           <div className="mx-auto mb-14 max-w-2xl text-center">
-            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">How it works</h2>
-            <p className="mt-3 text-muted-foreground">Three simple steps to financial clarity.</p>
+            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{t("landing.howItWorksTitle")}</h2>
+            <p className="mt-3 text-muted-foreground">{t("landing.howItWorksSub")}</p>
           </div>
           <div className="relative grid gap-8 md:grid-cols-3">
-            {steps.map((s, i) => (
+            {stepMeta.map((s, i) => (
               <motion.div
-                key={s.title}
+                key={s.key}
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -174,10 +174,10 @@ function Index() {
                 <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-primary to-emerald-500 text-primary-foreground">
                   <s.icon className="h-6 w-6" />
                 </div>
-                <div className="mt-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">Step {i + 1}</div>
-                <h3 className="mt-2 text-xl font-medium">{s.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{s.body}</p>
-                {i < steps.length - 1 && (
+                <div className="mt-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">{t("landing.step")} {i + 1}</div>
+                <h3 className="mt-2 text-xl font-medium">{t(`steps.${s.key}`)}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{t(`steps.${s.key}Body`)}</p>
+                {i < stepMeta.length - 1 && (
                   <ArrowRight className="absolute right-[-20px] top-1/2 hidden h-6 w-6 -translate-y-1/2 text-muted-foreground/40 md:block" />
                 )}
               </motion.div>
@@ -189,13 +189,13 @@ function Index() {
       {/* 6 Jars */}
       <section id="jars" className="container mx-auto px-6 py-24">
         <div className="mx-auto mb-14 max-w-2xl text-center">
-          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Meet your 6 jars</h2>
-          <p className="mt-3 text-muted-foreground">Every taka gets a job — the moment it lands.</p>
+          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{t("landing.jarsTitle")}</h2>
+          <p className="mt-3 text-muted-foreground">{t("landing.jarsSub")}</p>
         </div>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {jars.map((j, i) => (
+          {jarMeta.map((j, i) => (
             <motion.div
-              key={j.name}
+              key={j.key}
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -206,8 +206,8 @@ function Index() {
                 <div className={`grid h-12 w-12 place-items-center rounded-xl ${j.bg} text-2xl`}>{j.emoji}</div>
                 <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${j.bg} ${j.color}`}>{j.pct}%</span>
               </div>
-              <div className="mt-5 text-lg font-medium">{j.name}</div>
-              <p className="mt-1 text-sm text-muted-foreground">{j.purpose}</p>
+              <div className="mt-5 text-lg font-medium">{t(`jars.${j.key}`)}</div>
+              <p className="mt-1 text-sm text-muted-foreground">{t(`jars.${j.key}Desc`)}</p>
               <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-secondary">
                 <div className={`h-full rounded-full ${j.bar}`} style={{ width: `${j.pct}%` }} />
               </div>
@@ -220,8 +220,8 @@ function Index() {
       <section id="testimonials" className="border-y bg-muted/30">
         <div className="container mx-auto px-6 py-24">
           <div className="mx-auto mb-14 max-w-2xl text-center">
-            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Loved by mindful spenders</h2>
-            <p className="mt-3 text-muted-foreground">Real stories from people taking control of their money.</p>
+            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{t("landing.reviewsTitle")}</h2>
+            <p className="mt-3 text-muted-foreground">{t("landing.reviewsSub")}</p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {testimonials.map((t, i) => (
@@ -260,11 +260,11 @@ function Index() {
       {/* CTA */}
       <section className="container mx-auto px-6 py-24">
         <div className="relative overflow-hidden rounded-3xl border bg-gradient-to-br from-primary/10 via-card to-emerald-500/10 p-10 text-center md:p-16">
-          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Ready to give every taka a purpose?</h2>
-          <p className="mx-auto mt-3 max-w-xl text-muted-foreground">Join thousands building better money habits with HisabApp. Free forever for personal use.</p>
+          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{t("landing.finalCtaTitle")}</h2>
+          <p className="mx-auto mt-3 max-w-xl text-muted-foreground">{t("landing.finalCtaSub")}</p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Button asChild size="lg" className="gap-2"><Link to="/register">Get Started Free <ArrowRight className="h-4 w-4" /></Link></Button>
-            <Button asChild size="lg" variant="outline"><Link to="/login">Log in</Link></Button>
+            <Button asChild size="lg" className="gap-2"><Link to="/register">{t("landing.getStartedFree")} <ArrowRight className="h-4 w-4" /></Link></Button>
+            <Button asChild size="lg" variant="outline"><Link to="/login">{t("landing.finalCtaLogin")}</Link></Button>
           </div>
         </div>
       </section>

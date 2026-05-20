@@ -1,6 +1,5 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
 import en from "@/locales/en/translation.json";
 import bn from "@/locales/bn/translation.json";
 
@@ -9,26 +8,20 @@ export type AppLanguage = (typeof SUPPORTED_LANGS)[number];
 
 if (!i18n.isInitialized) {
   i18n
-    .use(LanguageDetector)
     .use(initReactI18next)
     .init({
       resources: {
         en: { translation: en },
         bn: { translation: bn },
       },
+      lng: "en",
       fallbackLng: "en",
       supportedLngs: SUPPORTED_LANGS as unknown as string[],
       interpolation: { escapeValue: false },
-      detection: {
-        order: ["localStorage", "navigator"],
-        lookupLocalStorage: "language",
-        caches: ["localStorage"],
-      },
     });
-  // Apply side effects (font + html lang) before first render.
-  if (typeof document !== "undefined") {
-    applyLangSideEffects(i18n.resolvedLanguage ?? "en");
-  }
+  // Note: we intentionally start with "en" on both SSR and the first client
+  // render so hydration matches. The persisted language (if any) is applied
+  // after mount by <LanguageSync /> via setAppLanguage().
 }
 
 export function applyLangSideEffects(lang: string) {

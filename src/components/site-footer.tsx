@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Send, MessageCircle, Phone } from "lucide-react";
 import { BrandLogo } from "@/components/brand-logo";
+import { useTranslation } from "react-i18next";
 
 const socials = [
   { icon: Facebook, href: "https://www.facebook.com/Sadik044", label: "Facebook" },
@@ -9,6 +10,7 @@ const socials = [
 ];
 
 export function SiteFooter() {
+  const { t } = useTranslation();
   return (
     <footer className="border-t bg-card/30">
       <div className="container mx-auto px-6 py-12">
@@ -18,24 +20,24 @@ export function SiteFooter() {
               <BrandLogo />
             </Link>
             <p className="mt-3 text-sm text-muted-foreground">
-              Smart money management using the 6 Jar Method
+              {t("footer.tagline")}
             </p>
           </div>
 
           <div>
-            <div className="text-sm font-medium">Quick Links</div>
+            <div className="text-sm font-medium">{t("footer.quickLinks")}</div>
             <ul className="mt-3 grid grid-cols-2 gap-2 text-sm text-muted-foreground">
-              <li><Link to="/" className="transition-colors hover:text-foreground">Home</Link></li>
-              <li><Link to="/" hash="features" className="transition-colors hover:text-foreground">Features</Link></li>
-              <li><Link to="/" hash="jars" className="transition-colors hover:text-foreground">About</Link></li>
-              <li><Link to="/contact" className="transition-colors hover:text-foreground">Contact</Link></li>
-              <li><Link to="/login" className="transition-colors hover:text-foreground">Login</Link></li>
-              <li><Link to="/register" className="transition-colors hover:text-foreground">Register</Link></li>
+              <li><Link to="/" className="transition-colors hover:text-foreground">{t("footer.home")}</Link></li>
+              <li><Link to="/" hash="features" className="transition-colors hover:text-foreground">{t("footer.features")}</Link></li>
+              <li><Link to="/" hash="jars" className="transition-colors hover:text-foreground">{t("footer.about")}</Link></li>
+              <li><Link to="/contact" className="transition-colors hover:text-foreground">{t("footer.contact")}</Link></li>
+              <li><Link to="/login" className="transition-colors hover:text-foreground">{t("footer.login")}</Link></li>
+              <li><Link to="/register" className="transition-colors hover:text-foreground">{t("footer.register")}</Link></li>
             </ul>
           </div>
 
           <div>
-            <div className="text-sm font-medium">Connect</div>
+            <div className="text-sm font-medium">{t("footer.connect")}</div>
             <div className="mt-3 flex items-center gap-3">
               {socials.map((s) => (
                 <a
@@ -60,9 +62,9 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-10 flex flex-col items-center justify-between gap-2 border-t pt-6 text-xs text-muted-foreground sm:flex-row">
-          <span>© 2025 HisabApp. Built by Sadik Shah. All rights reserved.</span>
+          <span>{t("footer.rights")}</span>
           <a href="tel:+8801924997029" className="transition-colors hover:text-foreground">
-            Phone: 01924997029
+            {t("footer.phone")}: 01924997029
           </a>
         </div>
       </div>
