@@ -21,10 +21,14 @@ if (!i18n.isInitialized) {
       interpolation: { escapeValue: false },
       detection: {
         order: ["localStorage", "navigator"],
-        lookupLocalStorage: "jarwise-lang",
+        lookupLocalStorage: "language",
         caches: ["localStorage"],
       },
     });
+  // Apply side effects (font + html lang) before first render.
+  if (typeof document !== "undefined") {
+    applyLangSideEffects(i18n.resolvedLanguage ?? "en");
+  }
 }
 
 export function applyLangSideEffects(lang: string) {
@@ -40,7 +44,7 @@ export function applyLangSideEffects(lang: string) {
 export function setAppLanguage(lang: AppLanguage) {
   void i18n.changeLanguage(lang);
   if (typeof window !== "undefined") {
-    localStorage.setItem("jarwise-lang", lang);
+    localStorage.setItem("language", lang);
   }
   applyLangSideEffects(lang);
 }
