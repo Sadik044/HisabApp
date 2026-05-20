@@ -15,9 +15,21 @@ export function LanguageSync() {
   const { i18n } = useTranslation();
   const { user } = useAuth();
 
+  // On client mount, adopt the persisted language from localStorage. This
+  // runs AFTER hydration so SSR/CSR markup matches on the first render.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const saved = localStorage.getItem("language") as AppLanguage | null;
+    if (saved && saved !== i18n.resolvedLanguage) {
+      setAppLanguage(saved);
+    } else {
+      applyLangSideEffects(i18n.resolvedLanguage ?? "en");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Apply the font/lang attribute whenever the active language changes.
   useEffect(() => {
-    applyLangSideEffects(i18n.resolvedLanguage ?? "en");
     const handler = (lng: string) => applyLangSideEffects(lng);
     i18n.on("languageChanged", handler);
     return () => {
