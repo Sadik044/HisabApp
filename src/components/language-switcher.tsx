@@ -10,15 +10,18 @@ import {
 import { setAppLanguage, type AppLanguage } from "@/lib/i18n";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function LanguageSwitcher() {
   const { i18n } = useTranslation();
   const { user } = useAuth();
+  const queryClient = useQueryClient();
   const current = (i18n.resolvedLanguage ?? "en") as AppLanguage;
 
   async function pick(lang: AppLanguage) {
     setAppLanguage(lang);
     if (user) {
+      queryClient.setQueryData(["profile-language", user.id], lang);
       await supabase.from("profiles").update({ language: lang }).eq("id", user.id);
     }
   }
