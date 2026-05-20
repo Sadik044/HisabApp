@@ -66,7 +66,7 @@ export function AppShell() {
           <div className="grid h-8 w-8 place-items-center rounded-lg bg-primary text-primary-foreground">
             <Wallet className="h-4 w-4" />
           </div>
-          <span className="font-semibold">JarWise</span>
+          <span className="font-semibold">HisabApp</span>
         </Link>
         <div className="flex items-center gap-1">
           <LanguageSwitcher />
@@ -90,7 +90,7 @@ export function AppShell() {
             <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary text-primary-foreground">
               <Wallet className="h-5 w-5" />
             </div>
-            {!collapsed && <span className="font-semibold tracking-tight">JarWise</span>}
+            {!collapsed && <span className="font-semibold tracking-tight">HisabApp</span>}
           </div>
           <nav className={cn("flex flex-col gap-1", collapsed ? "p-2" : "p-3")}>
             {nav.map((n) => {
