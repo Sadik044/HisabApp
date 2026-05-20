@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Wallet, Facebook, Send, MessageCircle, Phone } from "lucide-react";
+import { Facebook, Send, MessageCircle, Phone } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
 
 const socials = [
   { icon: Facebook, href: "https://www.facebook.com/Sadik044", label: "Facebook" },
@@ -13,11 +14,8 @@ export function SiteFooter() {
       <div className="container mx-auto px-6 py-12">
         <div className="grid gap-10 md:grid-cols-3">
           <div>
-            <Link to="/" className="flex items-center gap-2">
-              <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary text-primary-foreground">
-                <Wallet className="h-5 w-5" />
-              </div>
-              <span className="font-semibold tracking-tight">HisabApp</span>
+            <Link to="/">
+              <BrandLogo />
             </Link>
             <p className="mt-3 text-sm text-muted-foreground">
               Smart money management using the 6 Jar Method
