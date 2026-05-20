@@ -24,9 +24,9 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "JarWise — Take Control of Your Money with the 6 Jar Method" },
-      { name: "description", content: "JarWise turns the proven 6 Jar Money Method into a beautiful app. Auto-split income, track expenses, and grow real wealth on autopilot." },
-      { property: "og:title", content: "JarWise — Take Control of Your Money with the 6 Jar Method" },
+      { title: "HisabApp — Take Control of Your Money with the 6 Jar Method" },
+      { name: "description", content: "HisabApp turns the proven 6 Jar Money Method into a beautiful app. Auto-split income, track expenses, and grow real wealth on autopilot." },
+      { property: "og:title", content: "HisabApp — Take Control of Your Money with the 6 Jar Method" },
       { property: "og:description", content: "Auto-split income across 6 purpose-driven jars, track spending, and grow wealth on autopilot." },
     ],
   }),
@@ -53,12 +53,12 @@ const features = [
 
 const steps = [
   { icon: Plus, title: "Add Income", body: "Log salary, freelance or any earning — once, in seconds." },
-  { icon: Shuffle, title: "Auto Split", body: "JarWise allocates funds across your 6 jars by percentage." },
+  { icon: Shuffle, title: "Auto Split", body: "HisabApp allocates funds across your 6 jars by percentage." },
   { icon: LineChart, title: "Track & Grow", body: "Spend mindfully and watch your savings climb every month." },
 ];
 
 const testimonials = [
-  { name: "Ayesha Rahman", role: "Freelance Designer", quote: "JarWise made budgeting feel effortless. I finally saved for my first trip abroad without stress." },
+  { name: "Ayesha Rahman", role: "Freelance Designer", quote: "HisabApp made budgeting feel effortless. I finally saved for my first trip abroad without stress." },
   { name: "Tanvir Hasan", role: "Software Engineer", quote: "The auto-split is genius. My Financial Freedom jar grows every month without me thinking about it." },
   { name: "Mehnaz Karim", role: "Small Business Owner", quote: "Clean, fast, and beautiful. The reports alone are worth it — I share them with my accountant." },
 ];
@@ -73,7 +73,7 @@ function Index() {
             <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary text-primary-foreground">
               <Wallet className="h-5 w-5" />
             </div>
-            <span className="font-semibold tracking-tight">JarWise</span>
+            <span className="font-semibold tracking-tight">HisabApp</span>
           </Link>
           <nav className="hidden items-center gap-6 md:flex">
             <a href="#features" className="text-sm text-muted-foreground hover:text-foreground">{t("nav.features")}</a>
@@ -264,7 +264,7 @@ function Index() {
       <section className="container mx-auto px-6 py-24">
         <div className="relative overflow-hidden rounded-3xl border bg-gradient-to-br from-primary/10 via-card to-emerald-500/10 p-10 text-center md:p-16">
           <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Ready to give every taka a purpose?</h2>
-          <p className="mx-auto mt-3 max-w-xl text-muted-foreground">Join thousands building better money habits with JarWise. Free forever for personal use.</p>
+          <p className="mx-auto mt-3 max-w-xl text-muted-foreground">Join thousands building better money habits with HisabApp. Free forever for personal use.</p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Button asChild size="lg" className="gap-2"><Link to="/register">Get Started Free <ArrowRight className="h-4 w-4" /></Link></Button>
             <Button asChild size="lg" variant="outline"><Link to="/login">Log in</Link></Button>
