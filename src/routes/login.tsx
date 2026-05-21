@@ -72,6 +72,14 @@ function LoginPage() {
     if (!result.redirected && !result.error) navigate({ to: "/dashboard" });
   }
 
+  if (authLoading || user) {
+    return (
+      <div className="grid min-h-screen place-items-center bg-background text-muted-foreground">
+        <div className="h-10 w-10 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+      </div>
+    );
+  }
+
   return (
     <AuthShell title="Welcome back" subtitle="Log in to keep growing your jars.">
       <form onSubmit={onSubmit} className="space-y-4">
