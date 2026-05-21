@@ -185,6 +185,7 @@ function JarsPage() {
 function TransferDialog({ open, onOpenChange, jars, currency, userId, qc }: {
   open: boolean; onOpenChange: (o: boolean) => void; jars: any[]; currency: string; userId: string; qc: ReturnType<typeof useQueryClient>;
 }) {
+  const { t } = useTranslation();
   const [fromId, setFromId] = useState("");
   const [toId, setToId] = useState("");
   const [amount, setAmount] = useState("");
@@ -281,6 +282,7 @@ function TransferDialog({ open, onOpenChange, jars, currency, userId, qc }: {
 function CustomizeDialog({ open, onOpenChange, jars, qc, userId }: {
   open: boolean; onOpenChange: (o: boolean) => void; jars: any[]; qc: ReturnType<typeof useQueryClient>; userId: string;
 }) {
+  const { t } = useTranslation();
   const [vals, setVals] = useState<Record<string, string>>({});
 
   useEffect(() => {
