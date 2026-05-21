@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AuthShell } from "@/components/auth-shell";
 import { toast } from "sonner";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 export const Route = createFileRoute("/login")({
   head: () => ({ meta: [{ title: "Log in — JarWise" }] }),
@@ -15,16 +17,45 @@ export const Route = createFileRoute("/login")({
 
 function LoginPage() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [failed, setFailed] = useState(0);
+  const [lockUntil, setLockUntil] = useState(0);
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    if (lockUntil <= now) return;
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, [lockUntil, now]);
+
+  const locked = lockUntil > now;
+  const secondsLeft = locked ? Math.ceil((lockUntil - now) / 1000) : 0;
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (locked) return;
+    const cleanEmail = email.trim();
+    const cleanPassword = password;
+    if (/<[^>]*>/.test(cleanEmail) || /<script/i.test(cleanPassword)) {
+      return toast.error("Invalid characters in input.");
+    }
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await supabase.auth.signInWithPassword({ email: cleanEmail, password: cleanPassword });
     setLoading(false);
-    if (error) return toast.error(error.message);
+    if (error) {
+      const next = failed + 1;
+      setFailed(next);
+      if (next >= 5) {
+        setLockUntil(Date.now() + 30_000);
+        setFailed(0);
+        return toast.error(t("auth.tooManyAttempts"));
+      }
+      return toast.error(error.message);
+    }
+    setFailed(0);
     toast.success("Welcome back!");
     navigate({ to: "/dashboard" });
   }
@@ -49,7 +80,9 @@ function LoginPage() {
           </div>
           <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required autoComplete="current-password" />
         </div>
-        <Button type="submit" className="w-full" disabled={loading}>{loading ? "Signing in…" : "Log in"}</Button>
+        <Button type="submit" className="w-full" disabled={loading || locked}>
+          {locked ? `${t("auth.tooManyAttempts")} (${secondsLeft}s)` : loading ? "Signing in…" : "Log in"}
+        </Button>
       </form>
       <div className="relative my-6">
         <div className="absolute inset-0 flex items-center"><span className="w-full border-t" /></div>

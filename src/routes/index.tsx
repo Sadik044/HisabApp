@@ -6,6 +6,7 @@ import { ContactSection } from "@/components/contact-section";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { useTranslation } from "react-i18next";
 import { SiteFooter } from "@/components/site-footer";
+import { BackToTop } from "@/components/back-to-top";
 import { BrandLogo } from "@/components/brand-logo";
 import {
   Sparkles,
@@ -274,6 +275,7 @@ function Index() {
       </section>
 
       <SiteFooter />
+      <BackToTop />
     </div>
   );
 }
