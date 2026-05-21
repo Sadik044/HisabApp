@@ -212,7 +212,7 @@ function TransferDialog({ open, onOpenChange, jars, currency, userId, qc }: {
       }
     },
     onSuccess: () => {
-      toast.success("Transfer complete");
+      toast.success(t("toast.transferDone"));
       qc.invalidateQueries({ queryKey: ["jars", userId] });
       onOpenChange(false);
     },
@@ -305,7 +305,7 @@ function CustomizeDialog({ open, onOpenChange, jars, qc, userId }: {
       }
     },
     onSuccess: () => {
-      toast.success("Jar percentages updated");
+      toast.success(t("toast.settingsSaved"));
       qc.invalidateQueries({ queryKey: ["jars", userId] });
       onOpenChange(false);
     },

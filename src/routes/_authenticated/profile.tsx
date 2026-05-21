@@ -54,7 +54,7 @@ function ProfilePage() {
         toast.info("Check your inbox to confirm the new email address.");
       }
     },
-    onSuccess: () => { toast.success("Profile saved"); qc.invalidateQueries({ queryKey: ["profile", userId] }); },
+    onSuccess: () => { toast.success(t("toast.profileSaved")); qc.invalidateQueries({ queryKey: ["profile", userId] }); },
     onError: (e: Error) => toast.error(e.message),
   });
 
@@ -67,7 +67,7 @@ function ProfilePage() {
       const { error } = await supabase.auth.updateUser({ password: newPassword });
       if (error) throw error;
     },
-    onSuccess: () => { toast.success("Password updated"); setCurrentPassword(""); setNewPassword(""); },
+    onSuccess: () => { toast.success(t("toast.passwordChanged")); setCurrentPassword(""); setNewPassword(""); },
     onError: (e: Error) => toast.error(e.message),
   });
 
@@ -87,7 +87,7 @@ function ProfilePage() {
       const { error: dbErr } = await supabase.from("profiles").update({ avatar_url: data.publicUrl }).eq("id", userId);
       if (dbErr) throw dbErr;
       qc.invalidateQueries({ queryKey: ["profile", userId] });
-      toast.success("Profile picture updated");
+      toast.success(t("toast.profileSaved"));
     } catch (err) {
       toast.error((err as Error).message);
     } finally {

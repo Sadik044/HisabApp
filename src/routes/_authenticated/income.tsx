@@ -73,7 +73,7 @@ function IncomePage() {
       if (error) throw error;
     },
     onSuccess: () => {
-      toast.success("Income added — distributed across jars");
+      toast.success(t("toast.incomeAdded"));
       setAmount(""); setNote("");
       invalidateAll();
     },
@@ -94,7 +94,7 @@ function IncomePage() {
       if (error) throw error;
     },
     onSuccess: () => {
-      toast.success("Income updated — jars rebalanced");
+      toast.success(t("toast.incomeAdded"));
       setEditing(null);
       invalidateAll();
     },
@@ -107,7 +107,7 @@ function IncomePage() {
       if (error) throw error;
     },
     onSuccess: () => {
-      toast.success("Income deleted — jar balances reversed");
+      toast.success(t("toast.incomeDeleted"));
       invalidateAll();
     },
     onError: (e: Error) => toast.error(e.message),
