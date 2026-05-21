@@ -25,8 +25,9 @@ function JarDetailPage() {
   const currency = profile?.currency ?? "BDT";
 
   const { data: jar } = useQuery({
-    queryKey: ["jar", jarId],
-    queryFn: async () => (await supabase.from("jars").select("*").eq("id", jarId).maybeSingle()).data,
+    queryKey: ["jar", jarId, userId],
+    queryFn: async () =>
+      (await supabase.from("jars").select("*").eq("id", jarId).eq("user_id", userId).maybeSingle()).data,
   });
 
   const { data: incomes = [] } = useQuery({
@@ -35,8 +36,9 @@ function JarDetailPage() {
   });
 
   const { data: expenses = [] } = useQuery({
-    queryKey: ["jar-expenses", jarId],
-    queryFn: async () => (await supabase.from("expenses").select("*").eq("jar_id", jarId).order("spent_at", { ascending: false }).limit(200)).data ?? [],
+    queryKey: ["jar-expenses", jarId, userId],
+    queryFn: async () =>
+      (await supabase.from("expenses").select("*").eq("jar_id", jarId).eq("user_id", userId).order("spent_at", { ascending: false }).limit(200)).data ?? [],
   });
 
   if (!jar) {
