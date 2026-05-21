@@ -12,5 +12,5 @@ export const JAR_COLORS: Record<string, string> = {
   EDU: "#8B5CF6",
   PLAY: "#F59E0B",
   FFA: "#EF4444",
-  GIVE: "#EC4899",
+  GIVE: "#14B8A6",
 };
