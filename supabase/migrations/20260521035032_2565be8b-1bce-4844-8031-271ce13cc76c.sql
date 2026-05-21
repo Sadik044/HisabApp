@@ -1,0 +1,1 @@
+UPDATE public.jars SET color = '#14B8A6' WHERE key = 'GIVE' AND color = '#EC4899';
