@@ -62,7 +62,7 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-10 flex flex-col items-center justify-between gap-2 border-t pt-6 text-xs text-muted-foreground sm:flex-row">
-          <span>{t("footer.rights")}</span>
+          <span>{t("footer.rights", { year: new Date().getFullYear() })}</span>
           <a href="tel:+8801924997029" className="transition-colors hover:text-foreground">
             {t("footer.phone")}: 01924997029
           </a>
