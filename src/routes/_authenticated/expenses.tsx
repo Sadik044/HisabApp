@@ -159,7 +159,7 @@ function ExpensesPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-semibold tracking-tight">Expenses</h1>
+        <h1 className="text-3xl font-semibold tracking-tight">{t("common.expenses")}</h1>
         <p className="text-sm text-muted-foreground">Log spending and watch jars adjust in real-time.</p>
       </div>
 

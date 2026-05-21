@@ -122,7 +122,7 @@ function IncomePage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-semibold tracking-tight">Income</h1>
+        <h1 className="text-3xl font-semibold tracking-tight">{t("common.income")}</h1>
         <p className="text-sm text-muted-foreground">Log income — it's auto-split across your 6 jars.</p>
       </div>
 

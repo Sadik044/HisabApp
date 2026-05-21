@@ -206,7 +206,7 @@ function ReportsPage() {
     <div className="space-y-8">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight">Reports</h1>
+          <h1 className="text-3xl font-semibold tracking-tight">{t("common.reports")}</h1>
           <p className="text-sm text-muted-foreground">Understand where your money flows.</p>
         </div>
         <div className="flex flex-wrap gap-2">

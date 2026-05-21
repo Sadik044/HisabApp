@@ -72,7 +72,7 @@ function JarsPage() {
     <div className="space-y-8">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight">The 6 Jars</h1>
+          <h1 className="text-3xl font-semibold tracking-tight">{t("nav.jars")}</h1>
           <p className="text-sm text-muted-foreground">Your money split by purpose, the proven way.</p>
         </div>
         <div className="flex gap-2">
