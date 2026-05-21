@@ -9,6 +9,7 @@ import { AuthShell } from "@/components/auth-shell";
 import { toast } from "sonner";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/login")({
   head: () => ({ meta: [{ title: "Log in — JarWise" }] }),
@@ -18,6 +19,7 @@ export const Route = createFileRoute("/login")({
 function LoginPage() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { user, loading: authLoading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -33,6 +35,10 @@ function LoginPage() {
 
   const locked = lockUntil > now;
   const secondsLeft = locked ? Math.ceil((lockUntil - now) / 1000) : 0;
+
+  useEffect(() => {
+    if (!authLoading && user) navigate({ to: "/dashboard", replace: true });
+  }, [authLoading, user, navigate]);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
