@@ -135,6 +135,6 @@ This project is licensed under the MIT License.
 
 ---
 
-Copyright 2025 HisabApp — Built with love by Sadik Shah
+Copyright 2026 HisabApp — Built with love by Sadik Shah
 
 If you like this project, please give it a star on GitHub!
