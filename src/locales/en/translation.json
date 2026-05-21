@@ -266,7 +266,8 @@
     "loginBtn": "Login",
     "registerBtn": "Create Account",
     "google": "Continue with Google",
-    "or": "or"
+    "or": "or",
+    "tooManyAttempts": "Too many attempts. Wait 30 seconds before trying again."
   },
   "contact": {
     "title": "Get In Touch",
@@ -332,5 +333,9 @@
     "networkError": "❌ Connection failed. Try again.",
     "authError": "❌ Invalid email or password.",
     "requiredFields": "❌ Please fill all required fields."
+  },
+  "errorBoundary": {
+    "message": "Something went wrong. Please refresh the page.",
+    "refresh": "Refresh"
   }
 }
