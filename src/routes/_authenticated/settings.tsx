@@ -83,7 +83,7 @@ function SettingsPage() {
       if (error) throw error;
     },
     onSuccess: () => {
-      toast.success("Settings saved");
+      toast.success(t("toast.settingsSaved"));
       qc.invalidateQueries({ queryKey: ["profile", userId] });
     },
     onError: (e: Error) => toast.error(e.message),

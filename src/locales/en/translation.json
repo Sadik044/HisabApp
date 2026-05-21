@@ -317,5 +317,20 @@
     "reportsTitle": "No report data yet",
     "reportsSub": "Add income and expenses to see your reports",
     "reportsCta": "Add Income"
+  },
+  "toast": {
+    "incomeAdded": "✅ Income added & jars updated!",
+    "incomeDeleted": "✅ Income deleted successfully!",
+    "expenseAdded": "✅ Expense recorded successfully!",
+    "expenseDeleted": "✅ Expense deleted successfully!",
+    "profileSaved": "✅ Profile updated successfully!",
+    "settingsSaved": "✅ Settings saved!",
+    "transferDone": "✅ Transfer completed!",
+    "passwordChanged": "✅ Password changed successfully!",
+    "jarLow": "⚠️ Jar balance is running low!",
+    "expenseExceeds": "⚠️ Expense exceeds jar balance!",
+    "networkError": "❌ Connection failed. Try again.",
+    "authError": "❌ Invalid email or password.",
+    "requiredFields": "❌ Please fill all required fields."
   }
 }

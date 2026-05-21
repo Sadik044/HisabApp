@@ -82,7 +82,7 @@ function ExpensesPage() {
       if (error) throw error;
     },
     onSuccess: () => {
-      toast.success("Expense logged");
+      toast.success(t("toast.expenseAdded"));
       setAmount(""); setNote("");
       setConfirmOverride(null);
       invalidateAll();
@@ -106,7 +106,7 @@ function ExpensesPage() {
       if (error) throw error;
     },
     onSuccess: () => {
-      toast.success("Expense updated — jars rebalanced");
+      toast.success(t("toast.expenseAdded"));
       setEditing(null);
       invalidateAll();
     },
@@ -119,7 +119,7 @@ function ExpensesPage() {
       if (error) throw error;
     },
     onSuccess: () => {
-      toast.success("Expense deleted — jar balance restored");
+      toast.success(t("toast.expenseDeleted"));
       invalidateAll();
     },
     onError: (e: Error) => toast.error(e.message),
@@ -149,8 +149,8 @@ function ExpensesPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!amtNum || amtNum <= 0) return toast.error("Enter a valid amount");
-    if (!jarId) return toast.error("Pick a jar");
+    if (!amtNum || amtNum <= 0) return toast.error(t("toast.requiredFields"));
+    if (!jarId) return toast.error(t("toast.requiredFields"));
     if (overdraft && selectedJar) {
       setConfirmOverride({
         message: `Amount ${formatCurrency(amtNum, currency)} exceeds ${selectedJar.name} balance (${formatCurrency(Number(selectedJar.balance), currency)}). Proceed anyway?`,
