@@ -182,7 +182,7 @@ function DashboardPage() {
           ctaTo="/income"
         />
       ) : (
-      <>
+      <div className="space-y-8">
       <div className="grid gap-4 lg:grid-cols-3">
         {expByJarLoading ? <ChartSkeleton /> : (
         <ChartCard title={t("dashboard.expensesByJar")} subtitle={t("dashboard.thisMonth")}>
@@ -316,7 +316,7 @@ function DashboardPage() {
           </div>
         </div>
       </div>
-      </>
+      </div>
       )}
     </div>
   );
