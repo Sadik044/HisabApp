@@ -23,6 +23,7 @@ export const Route = createFileRoute("/_authenticated/income")({
 
 function IncomePage() {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const userId = user!.id;
   const qc = useQueryClient();
 

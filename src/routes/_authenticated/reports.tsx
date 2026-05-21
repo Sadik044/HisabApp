@@ -31,6 +31,7 @@ function isoDate(d: Date) { return d.toISOString().slice(0, 10); }
 
 function ReportsPage() {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const userId = user!.id;
 
   const [preset, setPreset] = useState<Preset>("month");

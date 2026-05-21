@@ -41,6 +41,7 @@ export const Route = createFileRoute("/_authenticated/jars")({
 
 function JarsPage() {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const userId = user!.id;
   const qc = useQueryClient();
 

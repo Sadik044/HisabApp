@@ -23,6 +23,7 @@ export const Route = createFileRoute("/_authenticated/expenses")({
 
 function ExpensesPage() {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const userId = user!.id;
   const qc = useQueryClient();
 
