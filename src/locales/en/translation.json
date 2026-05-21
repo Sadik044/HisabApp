@@ -197,7 +197,33 @@
     "saved": "Settings saved!",
     "danger": "Danger Zone",
     "deleteAccount": "Delete Account",
-    "deleteConfirm": "Are you sure? This cannot be undone."
+    "deleteConfirm": "Are you sure? This cannot be undone.",
+    "subtitle": "Configure your preferences.",
+    "preferences": "Preferences",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "themeHint": "Persisted to your profile.",
+    "currencyHint": "Used to format every amount shown in the app.",
+    "notificationsDesc": "Choose which alerts you want to receive.",
+    "budgetWarn": "Budget warnings",
+    "budgetWarnDesc": "Get alerted when an expense exceeds the chosen jar balance.",
+    "monthlySum": "Monthly summary",
+    "monthlySumDesc": "Receive a recap of income, expenses, and savings every month.",
+    "lowBal": "Jar low balance alerts",
+    "lowBalDesc": "Be notified when any jar's balance drops to near zero.",
+    "jarAutomation": "Jar automation",
+    "jarAutomationDesc": "Control how your jars behave over time.",
+    "monthlyResetTitle": "Monthly reset",
+    "monthlyResetDesc": "On the 1st of each month, reset all jar balances to 0 before applying new income.",
+    "saving": "Saving…",
+    "dangerDesc": "Permanent actions. Proceed with caution.",
+    "deleteDialogTitle": "Delete your account?",
+    "deleteDialogDesc": "This permanently removes your profile, jars, income, and expense history. This action cannot be undone.",
+    "deleting": "Deleting…",
+    "confirmDelete": "Yes, delete forever",
+    "accountDeleted": "Account deleted"
   },
   "profile": {
     "title": "My Profile",
@@ -212,7 +238,18 @@
     "confirmPass": "Confirm New Password",
     "save": "Save Profile",
     "saved": "Profile updated successfully!",
-    "member": "Member since"
+    "member": "Member since",
+    "subtitle": "Manage your personal information.",
+    "uploadHint": "PNG, JPG up to 5MB.",
+    "changePhoto": "Change photo",
+    "saving": "Saving…",
+    "saveBtn": "Save profile",
+    "changePasswordTitle": "Change password",
+    "changePasswordDesc": "Confirm your current password, then choose a new one.",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "updatePassword": "Update password",
+    "updating": "Updating…"
   },
   "auth": {
     "welcomeBack": "Welcome Back",
@@ -261,7 +298,7 @@
     "login": "Login",
     "register": "Register",
     "connect": "Connect",
-    "rights": "© 2026 HisabApp. Built by Sadik Shah. All rights reserved.",
+    "rights": "© {{year}} HisabApp. Built by Sadik Shah. All rights reserved.",
     "phone": "Phone"
   }
 }
