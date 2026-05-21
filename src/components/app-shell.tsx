@@ -180,6 +180,9 @@ export function AppShell() {
               </motion.div>
             </AnimatePresence>
           </div>
+          <footer className="border-t py-6 text-center text-xs text-muted-foreground">
+            © 2026 HisabApp · Built with ❤️ by Sadik Shah
+          </footer>
         </main>
       </div>
     </div>
