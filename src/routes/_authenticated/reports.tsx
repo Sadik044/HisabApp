@@ -391,6 +391,8 @@ function ReportsPage() {
           })}
         </ul>
       </div>
+      </>
+      )}
     </div>
   );
 }
