@@ -275,6 +275,7 @@ function Index() {
       </section>
 
       <SiteFooter />
+      <BackToTop />
     </div>
   );
 }
