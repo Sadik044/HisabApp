@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { motion } from "framer-motion";
@@ -8,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { SiteFooter } from "@/components/site-footer";
 import { BackToTop } from "@/components/back-to-top";
 import { BrandLogo } from "@/components/brand-logo";
+import { useAuth } from "@/hooks/use-auth";
 import {
   Sparkles,
   Target,
@@ -70,6 +72,21 @@ const testimonials = [
 
 function Index() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
+
+  useEffect(() => {
+    if (!authLoading && user) navigate({ to: "/dashboard", replace: true });
+  }, [authLoading, user, navigate]);
+
+  if (authLoading || user) {
+    return (
+      <div className="grid min-h-screen place-items-center bg-background text-muted-foreground">
+        <div className="h-10 w-10 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-40 border-b bg-background/70 backdrop-blur-xl">
