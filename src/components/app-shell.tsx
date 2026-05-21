@@ -76,6 +76,14 @@ export function AppShell() {
       </header>
 
       <div className="md:flex">
+        {/* Mobile overlay */}
+        {open && (
+          <div
+            className="fixed inset-0 top-[57px] z-10 bg-black/50 md:hidden"
+            onClick={() => setOpen(false)}
+            aria-hidden="true"
+          />
+        )}
         {/* Sidebar */}
         <aside
           className={cn(
