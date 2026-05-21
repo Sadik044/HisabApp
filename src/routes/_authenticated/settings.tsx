@@ -16,6 +16,7 @@ import { useTheme } from "next-themes";
 import { toast } from "sonner";
 import { Trash2 } from "lucide-react";
 import { deleteAccount } from "@/lib/account.functions";
+import { useTranslation } from "react-i18next";
 
 const CURRENCIES = [
   { code: "BDT", label: "Bangladeshi Taka (৳)" },
@@ -50,6 +51,7 @@ function SettingsPage() {
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
   const deleteAccountFn = useServerFn(deleteAccount);
+  const { t } = useTranslation();
 
   const { data: profile } = useQuery({
     queryKey: ["profile", userId],
@@ -102,37 +104,37 @@ function SettingsPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-semibold tracking-tight">Settings</h1>
-        <p className="text-sm text-muted-foreground">Configure your preferences.</p>
+        <h1 className="text-3xl font-semibold tracking-tight">{t("settings.title")}</h1>
+        <p className="text-sm text-muted-foreground">{t("settings.subtitle")}</p>
       </div>
 
       {/* Preferences */}
       <div className="space-y-6 rounded-2xl border bg-card p-6 shadow-sm">
-        <div className="font-medium">Preferences</div>
+        <div className="font-medium">{t("settings.preferences")}</div>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5">
-            <Label>Currency</Label>
+            <Label>{t("settings.currency")}</Label>
             <Select value={currency} onValueChange={setCurrency}>
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>
                 {CURRENCIES.map((c) => <SelectItem key={c.code} value={c.code}>{c.label}</SelectItem>)}
               </SelectContent>
             </Select>
-            <p className="text-xs text-muted-foreground">Used to format every amount shown in the app.</p>
+            <p className="text-xs text-muted-foreground">{t("settings.currencyHint")}</p>
           </div>
 
           <div className="space-y-1.5">
-            <Label>Theme</Label>
+            <Label>{t("settings.theme")}</Label>
             <Select value={theme ?? "system"} onValueChange={setTheme}>
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="light">Light</SelectItem>
-                <SelectItem value="dark">Dark</SelectItem>
-                <SelectItem value="system">System</SelectItem>
+                <SelectItem value="light">{t("settings.themeLight")}</SelectItem>
+                <SelectItem value="dark">{t("settings.themeDark")}</SelectItem>
+                <SelectItem value="system">{t("settings.themeSystem")}</SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-xs text-muted-foreground">Persisted to your profile.</p>
+            <p className="text-xs text-muted-foreground">{t("settings.themeHint")}</p>
           </div>
         </div>
       </div>
@@ -140,24 +142,24 @@ function SettingsPage() {
       {/* Notifications */}
       <div className="space-y-4 rounded-2xl border bg-card p-6 shadow-sm">
         <div>
-          <div className="font-medium">Notifications</div>
-          <p className="text-xs text-muted-foreground">Choose which alerts you want to receive.</p>
+          <div className="font-medium">{t("settings.notifications")}</div>
+          <p className="text-xs text-muted-foreground">{t("settings.notificationsDesc")}</p>
         </div>
         <ToggleRow
-          label="Budget warnings"
-          description="Get alerted when an expense exceeds the chosen jar balance."
+          label={t("settings.budgetWarn")}
+          description={t("settings.budgetWarnDesc")}
           checked={prefs.budget_warnings}
           onChange={(v) => setPrefs((p) => ({ ...p, budget_warnings: v }))}
         />
         <ToggleRow
-          label="Monthly summary"
-          description="Receive a recap of income, expenses, and savings every month."
+          label={t("settings.monthlySum")}
+          description={t("settings.monthlySumDesc")}
           checked={prefs.monthly_summary}
           onChange={(v) => setPrefs((p) => ({ ...p, monthly_summary: v }))}
         />
         <ToggleRow
-          label="Jar low balance alerts"
-          description="Be notified when any jar's balance drops to near zero."
+          label={t("settings.lowBal")}
+          description={t("settings.lowBalDesc")}
           checked={prefs.low_balance}
           onChange={(v) => setPrefs((p) => ({ ...p, low_balance: v }))}
         />
@@ -166,12 +168,12 @@ function SettingsPage() {
       {/* Jars automation */}
       <div className="space-y-4 rounded-2xl border bg-card p-6 shadow-sm">
         <div>
-          <div className="font-medium">Jar automation</div>
-          <p className="text-xs text-muted-foreground">Control how your jars behave over time.</p>
+          <div className="font-medium">{t("settings.jarAutomation")}</div>
+          <p className="text-xs text-muted-foreground">{t("settings.jarAutomationDesc")}</p>
         </div>
         <ToggleRow
-          label="Monthly reset"
-          description="On the 1st of each month, reset all jar balances to 0 before applying new income."
+          label={t("settings.monthlyResetTitle")}
+          description={t("settings.monthlyResetDesc")}
           checked={monthlyReset}
           onChange={setMonthlyReset}
         />
@@ -179,37 +181,35 @@ function SettingsPage() {
 
       <div className="flex justify-end">
         <Button onClick={() => save.mutate()} disabled={save.isPending}>
-          {save.isPending ? "Saving…" : "Save changes"}
+          {save.isPending ? t("settings.saving") : t("settings.saveChanges")}
         </Button>
       </div>
 
       {/* Danger zone */}
       <div className="space-y-4 rounded-2xl border border-destructive/40 bg-destructive/5 p-6">
         <div>
-          <div className="font-medium text-destructive">Danger zone</div>
-          <p className="text-xs text-muted-foreground">Permanent actions. Proceed with caution.</p>
+          <div className="font-medium text-destructive">{t("settings.danger")}</div>
+          <p className="text-xs text-muted-foreground">{t("settings.dangerDesc")}</p>
         </div>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="destructive">
-              <Trash2 className="mr-2 h-4 w-4" /> Delete account
+              <Trash2 className="mr-2 h-4 w-4" /> {t("settings.deleteAccount")}
             </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Delete your account?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This permanently removes your profile, jars, income, and expense history. This action cannot be undone.
-              </AlertDialogDescription>
+              <AlertDialogTitle>{t("settings.deleteDialogTitle")}</AlertDialogTitle>
+              <AlertDialogDescription>{t("settings.deleteDialogDesc")}</AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
               <AlertDialogAction
                 onClick={(e) => { e.preventDefault(); del.mutate(); }}
                 disabled={del.isPending}
                 className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               >
-                {del.isPending ? "Deleting…" : "Yes, delete forever"}
+                {del.isPending ? t("settings.deleting") : t("settings.confirmDelete")}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

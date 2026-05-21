@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Camera, Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const Route = createFileRoute("/_authenticated/profile")({
   head: () => ({ meta: [{ title: "Profile — JarWise" }] }),
@@ -19,6 +20,7 @@ function ProfilePage() {
   const userId = user!.id;
   const qc = useQueryClient();
   const fileRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
 
   const { data: profile } = useQuery({
     queryKey: ["profile", userId],
@@ -99,8 +101,8 @@ function ProfilePage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-semibold tracking-tight">Profile</h1>
-        <p className="text-sm text-muted-foreground">Manage your personal information.</p>
+        <h1 className="text-3xl font-semibold tracking-tight">{t("common.profile")}</h1>
+        <p className="text-sm text-muted-foreground">{t("profile.subtitle")}</p>
       </div>
 
       <div className="space-y-6 rounded-2xl border bg-card p-6 shadow-sm">
@@ -116,7 +118,7 @@ function ProfilePage() {
               onClick={() => fileRef.current?.click()}
               disabled={uploading}
               className="absolute -bottom-1 -right-1 grid h-8 w-8 place-items-center rounded-full border bg-background shadow hover:bg-accent"
-              aria-label="Change photo"
+              aria-label={t("profile.changePhoto")}
             >
               {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Camera className="h-4 w-4" />}
             </button>
@@ -124,42 +126,42 @@ function ProfilePage() {
           </div>
           <div className="min-w-0">
             <div className="truncate font-medium">{user?.email}</div>
-            <div className="text-xs text-muted-foreground">PNG, JPG up to 5MB.</div>
+            <div className="text-xs text-muted-foreground">{t("profile.uploadHint")}</div>
           </div>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5">
-            <Label htmlFor="name">Full name</Label>
+            <Label htmlFor="name">{t("profile.name")}</Label>
             <Input id="name" value={fullName} onChange={(e) => setFullName(e.target.value)} maxLength={100} />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t("profile.email")}</Label>
             <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
           </div>
         </div>
         <Button onClick={() => saveProfile.mutate()} disabled={saveProfile.isPending}>
-          {saveProfile.isPending ? "Saving…" : "Save profile"}
+          {saveProfile.isPending ? t("profile.saving") : t("profile.saveBtn")}
         </Button>
       </div>
 
       <div className="space-y-4 rounded-2xl border bg-card p-6 shadow-sm">
         <div>
-          <div className="font-medium">Change password</div>
-          <p className="text-xs text-muted-foreground">Confirm your current password, then choose a new one.</p>
+          <div className="font-medium">{t("profile.changePasswordTitle")}</div>
+          <p className="text-xs text-muted-foreground">{t("profile.changePasswordDesc")}</p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5">
-            <Label htmlFor="cp">Current password</Label>
+            <Label htmlFor="cp">{t("profile.currentPassword")}</Label>
             <Input id="cp" type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="np">New password</Label>
+            <Label htmlFor="np">{t("profile.newPassword")}</Label>
             <Input id="np" type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} minLength={8} />
           </div>
         </div>
         <Button variant="outline" onClick={() => changePass.mutate()} disabled={changePass.isPending || !newPassword || !currentPassword}>
-          {changePass.isPending ? "Updating…" : "Update password"}
+          {changePass.isPending ? t("profile.updating") : t("profile.updatePassword")}
         </Button>
       </div>
     </div>
