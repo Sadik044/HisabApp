@@ -254,7 +254,7 @@ function ReportsPage() {
           ctaTo="/income"
         />
       ) : (
-      <>
+      <div className="space-y-8">
       <div className="grid gap-4 sm:grid-cols-3">
         <SummaryCard label="Income" value={formatCurrency(totalIncome, currency)} accent="text-emerald-500" />
         <SummaryCard label="Expenses" value={formatCurrency(totalExpense, currency)} accent="text-red-500" />
@@ -391,7 +391,7 @@ function ReportsPage() {
           })}
         </ul>
       </div>
-      </>
+      </div>
       )}
     </div>
   );
