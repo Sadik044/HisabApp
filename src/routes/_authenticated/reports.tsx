@@ -245,6 +245,16 @@ function ReportsPage() {
       </div>
 
       {/* Summary */}
+      {!incomesLoading && !expensesLoading && incomes.length === 0 && expenses.length === 0 ? (
+        <EmptyState
+          icon="📈"
+          title={t("empty.reportsTitle")}
+          description={t("empty.reportsSub")}
+          ctaLabel={t("empty.reportsCta")}
+          ctaTo="/income"
+        />
+      ) : (
+      <>
       <div className="grid gap-4 sm:grid-cols-3">
         <SummaryCard label="Income" value={formatCurrency(totalIncome, currency)} accent="text-emerald-500" />
         <SummaryCard label="Expenses" value={formatCurrency(totalExpense, currency)} accent="text-red-500" />
