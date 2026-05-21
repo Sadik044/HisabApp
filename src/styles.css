@@ -150,3 +150,7 @@
 .font-bengali body {
   font-family: "Hind Siliguri", "Inter", system-ui, -apple-system, sans-serif;
 }
+
+html {
+  scroll-behavior: smooth;
+}
