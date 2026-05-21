@@ -10,6 +10,7 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { EmptyState } from "@/components/empty-state";
 import {
   PieChart, Pie, Cell, ResponsiveContainer, Tooltip,
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend,
@@ -59,7 +60,7 @@ function DashboardPage() {
     },
   });
 
-  const { data: expensesByJar = [] } = useQuery({
+  const { data: expensesByJar = [], isLoading: expByJarLoading } = useQuery({
     queryKey: ["dash-exp-by-jar", userId],
     queryFn: async () => {
       const start = new Date(); start.setDate(1);
@@ -70,7 +71,7 @@ function DashboardPage() {
     },
   });
 
-  const { data: trend = [] } = useQuery({
+  const { data: trend = [], isLoading: trendLoading } = useQuery({
     queryKey: ["dash-trend", userId],
     queryFn: async () => {
       const now = new Date();
@@ -101,7 +102,7 @@ function DashboardPage() {
     },
   });
 
-  const { data: recent = [] } = useQuery({
+  const { data: recent = [], isLoading: recentLoading } = useQuery({
     queryKey: ["dash-recent", userId],
     queryFn: async () => {
       const [{ data: inc }, { data: exp }] = await Promise.all([
@@ -120,6 +121,8 @@ function DashboardPage() {
   const totalBalance = jars.reduce((s, j) => s + Number(j.balance), 0);
   const income = monthly?.income ?? 0;
   const expense = monthly?.expense ?? 0;
+  const anyLoading = monthlyLoading || jarsLoading || recentLoading || expByJarLoading || trendLoading;
+  const isEmpty = !anyLoading && income === 0 && expense === 0 && totalBalance === 0 && recent.length === 0;
   const netSavings = income - expense;
   const biggestJar = jars.reduce<typeof jars[number] | null>((a, b) => (!a || Number(b.balance) > Number(a.balance) ? b : a), null);
 
@@ -170,7 +173,18 @@ function DashboardPage() {
         )}
       </div>
 
+      {isEmpty ? (
+        <EmptyState
+          icon="📊"
+          title={t("empty.dashboardTitle")}
+          description={t("empty.dashboardSub")}
+          ctaLabel={t("empty.dashboardCta")}
+          ctaTo="/income"
+        />
+      ) : (
+      <>
       <div className="grid gap-4 lg:grid-cols-3">
+        {expByJarLoading ? <ChartSkeleton /> : (
         <ChartCard title={t("dashboard.expensesByJar")} subtitle={t("dashboard.thisMonth")}>
           {expensePieData.length === 0 ? <EmptyChart label="No expenses yet" /> : (
             <ResponsiveContainer width="100%" height={240}>
@@ -183,7 +197,9 @@ function DashboardPage() {
             </ResponsiveContainer>
           )}
         </ChartCard>
+        )}
 
+        {trendLoading ? <ChartSkeleton /> : (
         <ChartCard title={t("dashboard.incomeVsExpenses")} subtitle={t("dashboard.last6Months")}>
           <ResponsiveContainer width="100%" height={240}>
             <BarChart data={trend}>
@@ -197,7 +213,9 @@ function DashboardPage() {
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
+        )}
 
+        {jarsLoading ? <ChartSkeleton /> : (
         <ChartCard title={t("dashboard.jarAllocation")} subtitle={`${formatCurrency(totalBalance, currency)}`}>
           {allocationData.length === 0 ? <EmptyChart label="No balance yet" /> : (
             <ResponsiveContainer width="100%" height={240}>
@@ -210,6 +228,7 @@ function DashboardPage() {
             </ResponsiveContainer>
           )}
         </ChartCard>
+        )}
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
@@ -218,7 +237,22 @@ function DashboardPage() {
             <h2 className="text-lg font-medium">{t("dashboard.recentTransactions")}</h2>
             <span className="text-xs text-muted-foreground">{t("dashboard.last5")}</span>
           </div>
-          {recent.length === 0 ? (
+          {recentLoading ? (
+            <ul className="divide-y">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <li key={i} className="flex items-center justify-between py-3">
+                  <div className="flex items-center gap-3">
+                    <Skeleton className="h-9 w-9 rounded-full" />
+                    <div className="space-y-2">
+                      <Skeleton className="h-4 w-32" />
+                      <Skeleton className="h-3 w-24" />
+                    </div>
+                  </div>
+                  <Skeleton className="h-4 w-16" />
+                </li>
+              ))}
+            </ul>
+          ) : recent.length === 0 ? (
             <p className="py-8 text-center text-sm text-muted-foreground">{t("dashboard.noTransactions")}</p>
           ) : (
             <ul className="divide-y">
@@ -254,7 +288,17 @@ function DashboardPage() {
         <div className="rounded-2xl border bg-card p-5 shadow-sm">
           <h2 className="mb-4 text-lg font-medium">{t("dashboard.yourJars")}</h2>
           <div className="space-y-3">
-            {jars.map((j) => {
+            {jarsLoading
+              ? Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="space-y-2">
+                    <div className="flex justify-between">
+                      <Skeleton className="h-4 w-24" />
+                      <Skeleton className="h-4 w-16" />
+                    </div>
+                    <Skeleton className="h-2 w-full" />
+                  </div>
+                ))
+              : jars.map((j) => {
               const pct = totalBalance > 0 ? (Number(j.balance) / totalBalance) * 100 : 0;
               return (
                 <div key={j.id}>
@@ -272,6 +316,8 @@ function DashboardPage() {
           </div>
         </div>
       </div>
+      </>
+      )}
     </div>
   );
 }
@@ -319,6 +365,18 @@ function StatSkeleton() {
       </div>
       <Skeleton className="mt-3 h-7 w-32" />
       <Skeleton className="mt-2 h-3 w-20" />
+    </div>
+  );
+}
+
+function ChartSkeleton() {
+  return (
+    <div className="rounded-2xl border bg-card p-5 shadow-sm">
+      <div className="mb-3 flex items-center justify-between">
+        <Skeleton className="h-4 w-32" />
+        <Skeleton className="h-3 w-16" />
+      </div>
+      <Skeleton className="h-[240px] w-full rounded-md" />
     </div>
   );
 }
