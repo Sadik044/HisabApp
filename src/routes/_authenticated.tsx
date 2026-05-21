@@ -1,25 +1,26 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/use-auth";
 import { AppShell } from "@/components/app-shell";
-import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated")({
-  beforeLoad: async () => {
-    if (typeof window === "undefined") return;
-    const { data } = await supabase.auth.getSession();
-    if (!data.session) throw redirect({ to: "/login" });
-  },
   component: AuthLayout,
 });
+
+function AuthLoadingScreen() {
+  return (
+    <div className="grid min-h-screen place-items-center bg-background text-muted-foreground">
+      <div className="h-10 w-10 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+    </div>
+  );
+}
 
 function AuthLayout() {
   const { loading, user } = useAuth();
   if (loading) {
-    return <div className="grid min-h-screen place-items-center text-muted-foreground">Loading…</div>;
+    return <AuthLoadingScreen />;
   }
   if (!user) {
-    if (typeof window !== "undefined") window.location.href = "/login";
-    return null;
+    return <Navigate to="/login" replace />;
   }
   return <AppShell />;
 }
