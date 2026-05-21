@@ -28,6 +28,10 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "HisabApp turns the proven 6 Jar Money Method into a beautiful app. Auto-split income, track expenses, and grow real wealth on autopilot." },
       { property: "og:title", content: "HisabApp — Take Control of Your Money with the 6 Jar Method" },
       { property: "og:description", content: "Auto-split income across 6 purpose-driven jars, track spending, and grow wealth on autopilot." },
+      { property: "og:url", content: "/" },
+    ],
+    links: [
+      { rel: "canonical", href: "/" },
     ],
   }),
   component: Index,
