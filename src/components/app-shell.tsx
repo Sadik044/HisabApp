@@ -19,7 +19,7 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/language-switcher";
@@ -160,7 +160,15 @@ export function AppShell() {
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
               >
-                <Outlet />
+                <Suspense
+                  fallback={
+                    <div className="flex items-center justify-center h-[60vh]">
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500" />
+                    </div>
+                  }
+                >
+                  <Outlet />
+                </Suspense>
               </motion.div>
             </AnimatePresence>
           </div>
