@@ -17,6 +17,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import "@/lib/i18n";
 import { LanguageSync } from "@/components/language-sync";
+import { ErrorBoundary } from "@/components/error-boundary";
 
 function NotFoundComponent() {
   return (
@@ -143,7 +144,9 @@ function RootComponent() {
         <AuthProvider>
           <AuthEvents />
           <LanguageSync />
-          <Outlet />
+          <ErrorBoundary>
+            <Outlet />
+          </ErrorBoundary>
           <Toaster richColors position="top-right" />
         </AuthProvider>
       </ThemeProvider>
