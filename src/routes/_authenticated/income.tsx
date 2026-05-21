@@ -13,6 +13,8 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "
 import { formatCurrency } from "@/lib/format";
 import { toast } from "sonner";
 import { Pencil, Trash2, TrendingUp } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { EmptyState } from "@/components/empty-state";
 
 const CATEGORIES = ["Salary", "Freelance", "Business", "Investment", "Other"] as const;
 type Category = (typeof CATEGORIES)[number];
@@ -38,7 +40,7 @@ function IncomePage() {
   });
   const currency = profile?.currency ?? "BDT";
 
-  const { data: incomes = [] } = useQuery({
+  const { data: incomes = [], isLoading: incomesLoading } = useQuery({
     queryKey: ["incomes", userId],
     queryFn: async () =>
       (await supabase.from("incomes").select("*").eq("user_id", userId).order("received_at", { ascending: false }).limit(100)).data ?? [],
@@ -188,37 +190,56 @@ function IncomePage() {
         <div className="rounded-2xl border bg-card shadow-sm">
           <div className="border-b px-5 py-4 font-medium">History</div>
           <div className="divide-y">
-            {incomes.length === 0 && (
-              <div className="p-6 text-sm text-muted-foreground">No income yet.</div>
-            )}
-            {incomes.map((r) => (
-              <div key={r.id} className="flex items-center justify-between px-5 py-3">
-                <div>
-                  <div className="font-medium">{r.source}</div>
-                  <div className="text-xs text-muted-foreground">{r.received_at}{r.note ? ` · ${r.note}` : ""}</div>
+            {incomesLoading ? (
+              Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex items-center justify-between px-5 py-3">
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-40" />
+                  </div>
+                  <Skeleton className="h-4 w-20" />
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="font-medium text-emerald-500">+{formatCurrency(Number(r.amount), currency)}</div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    aria-label="Edit"
-                    onClick={() => setEditing({
-                      id: r.id,
-                      amount: String(r.amount),
-                      category: (CATEGORIES as readonly string[]).includes(r.source) ? (r.source as Category) : "Other",
-                      note: r.note ?? "",
-                      received_at: r.received_at,
-                    })}
-                  >
-                    <Pencil className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon" onClick={() => del.mutate(r.id)} aria-label="Delete">
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
+              ))
+            ) : incomes.length === 0 ? (
+              <div className="p-6">
+                <EmptyState
+                  icon="💰"
+                  title={t("empty.incomeTitle")}
+                  description={t("empty.incomeSub")}
+                  ctaLabel={t("empty.incomeCta")}
+                  onCtaClick={() => document.getElementById("amount")?.focus()}
+                />
               </div>
-            ))}
+            ) : (
+              incomes.map((r) => (
+                <div key={r.id} className="flex items-center justify-between px-5 py-3">
+                  <div>
+                    <div className="font-medium">{r.source}</div>
+                    <div className="text-xs text-muted-foreground">{r.received_at}{r.note ? ` · ${r.note}` : ""}</div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="font-medium text-emerald-500">+{formatCurrency(Number(r.amount), currency)}</div>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      aria-label="Edit"
+                      onClick={() => setEditing({
+                        id: r.id,
+                        amount: String(r.amount),
+                        category: (CATEGORIES as readonly string[]).includes(r.source) ? (r.source as Category) : "Other",
+                        note: r.note ?? "",
+                        received_at: r.received_at,
+                      })}
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </Button>
+                    <Button variant="ghost" size="icon" onClick={() => del.mutate(r.id)} aria-label="Delete">
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
