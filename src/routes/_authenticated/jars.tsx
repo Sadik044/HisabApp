@@ -16,6 +16,8 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { ArrowRightLeft, Settings2, ArrowRight, AlertTriangle } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
+import { EmptyState } from "@/components/empty-state";
 
 export const JAR_EMOJIS: Record<string, string> = {
   NEC: "🏠",
@@ -52,7 +54,7 @@ function JarsPage() {
   });
   const currency = profile?.currency ?? "BDT";
 
-  const { data: jars = [] } = useQuery({
+  const { data: jars = [], isLoading: jarsLoading } = useQuery({
     queryKey: ["jars", userId],
     queryFn: async () => (await supabase.from("jars").select("*").eq("user_id", userId).order("sort_order")).data ?? [],
   });
@@ -69,6 +71,8 @@ function JarsPage() {
 
   const [transferOpen, setTransferOpen] = useState(false);
   const [customizeOpen, setCustomizeOpen] = useState(false);
+
+  const totalBalance = jars.reduce((s, j) => s + Number(j.balance), 0);
 
   return (
     <div className="space-y-8">
@@ -87,6 +91,34 @@ function JarsPage() {
         </div>
       </div>
 
+      {jarsLoading ? (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="rounded-2xl border bg-card p-5 shadow-sm space-y-4">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <Skeleton className="h-10 w-10 rounded-lg" />
+                  <div className="space-y-2">
+                    <Skeleton className="h-3 w-20" />
+                    <Skeleton className="h-4 w-28" />
+                  </div>
+                </div>
+                <Skeleton className="h-3 w-3 rounded-full" />
+              </div>
+              <Skeleton className="h-7 w-32" />
+              <Skeleton className="h-2 w-full" />
+            </div>
+          ))}
+        </div>
+      ) : totalBalance === 0 ? (
+        <EmptyState
+          icon="🏺"
+          title={t("empty.jarsTitle")}
+          description={t("empty.jarsSub")}
+          ctaLabel={t("empty.jarsCta")}
+          ctaTo="/income"
+        />
+      ) : (
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {jars.map((j, i) => {
           const goal = (monthlyIncome * Number(j.percentage)) / 100;
@@ -142,6 +174,7 @@ function JarsPage() {
           );
         })}
       </div>
+      )}
 
       <TransferDialog open={transferOpen} onOpenChange={setTransferOpen} jars={jars} currency={currency} userId={userId} qc={qc} />
       <CustomizeDialog open={customizeOpen} onOpenChange={setCustomizeOpen} jars={jars} qc={qc} userId={userId} />

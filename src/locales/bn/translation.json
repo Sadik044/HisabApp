@@ -300,5 +300,22 @@
     "connect": "সংযুক্ত হোন",
     "rights": "© {{year}} HisabApp। সাদিক শাহ কর্তৃক নির্মিত। সর্বস্বত্ব সংরক্ষিত।",
     "phone": "ফোন"
+  },
+  "empty": {
+    "dashboardTitle": "HisabApp এ স্বাগতম!",
+    "dashboardSub": "শুরু করতে প্রথম আয় যোগ করুন",
+    "dashboardCta": "আয় যোগ করুন",
+    "incomeTitle": "কোনো আয় নেই",
+    "incomeSub": "জার পূরণ শুরু করতে প্রথম আয় যোগ করুন।",
+    "incomeCta": "আয় যোগ করুন",
+    "expenseTitle": "কোনো খরচ নেই",
+    "expenseSub": "জার সমন্বয় দেখতে প্রথম খরচ লিপিবদ্ধ করুন।",
+    "expenseCta": "খরচ যোগ করুন",
+    "jarsTitle": "আপনার জার খালি",
+    "jarsSub": "জার পূরণ করতে আয় যোগ করুন",
+    "jarsCta": "আয় যোগ করুন",
+    "reportsTitle": "এখনো কোনো রিপোর্ট নেই",
+    "reportsSub": "রিপোর্ট দেখতে আয় ও খরচ যোগ করুন",
+    "reportsCta": "আয় যোগ করুন"
   }
 }

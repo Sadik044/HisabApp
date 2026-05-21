@@ -13,6 +13,8 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogD
 import { formatCurrency } from "@/lib/format";
 import { toast } from "sonner";
 import { Pencil, Trash2, TrendingDown, AlertTriangle } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { EmptyState } from "@/components/empty-state";
 
 const CATEGORIES = ["Food", "Rent", "Internet", "Education", "Travel", "Entertainment", "Other"] as const;
 type Category = (typeof CATEGORIES)[number];
@@ -38,7 +40,7 @@ function ExpensesPage() {
   });
   const currency = profile?.currency ?? "BDT";
 
-  const { data: expenses = [] } = useQuery({
+  const { data: expenses = [], isLoading: expensesLoading } = useQuery({
     queryKey: ["expenses", userId],
     queryFn: async () =>
       (await supabase
@@ -260,8 +262,28 @@ function ExpensesPage() {
             )}
           </div>
           <div className="divide-y">
-            {filtered.length === 0 && <div className="p-6 text-sm text-muted-foreground">No expenses yet.</div>}
-            {filtered.map((r) => (
+            {expensesLoading ? (
+              Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex items-center justify-between px-5 py-3">
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-40" />
+                  </div>
+                  <Skeleton className="h-4 w-20" />
+                </div>
+              ))
+            ) : filtered.length === 0 ? (
+              <div className="p-6">
+                <EmptyState
+                  icon="🧾"
+                  title={t("empty.expenseTitle")}
+                  description={t("empty.expenseSub")}
+                  ctaLabel={t("empty.expenseCta")}
+                  onCtaClick={() => document.getElementById("amount")?.focus()}
+                />
+              </div>
+            ) : (
+              filtered.map((r) => (
               <div key={r.id} className="flex items-center justify-between px-5 py-3">
                 <div>
                   <div className="font-medium">{r.category}</div>
@@ -291,7 +313,8 @@ function ExpensesPage() {
                   </Button>
                 </div>
               </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </div>

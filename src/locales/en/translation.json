@@ -300,5 +300,22 @@
     "connect": "Connect",
     "rights": "© {{year}} HisabApp. Built by Sadik Shah. All rights reserved.",
     "phone": "Phone"
+  },
+  "empty": {
+    "dashboardTitle": "Welcome to HisabApp!",
+    "dashboardSub": "Add your first income to get started",
+    "dashboardCta": "Add Income",
+    "incomeTitle": "No income yet",
+    "incomeSub": "Track your first earning to start splitting it across jars.",
+    "incomeCta": "Add Income",
+    "expenseTitle": "No expenses yet",
+    "expenseSub": "Log your first expense to see your jars adjust.",
+    "expenseCta": "Add Expense",
+    "jarsTitle": "Your jars are empty",
+    "jarsSub": "Add income to fill your jars",
+    "jarsCta": "Add Income",
+    "reportsTitle": "No report data yet",
+    "reportsSub": "Add income and expenses to see your reports",
+    "reportsCta": "Add Income"
   }
 }
