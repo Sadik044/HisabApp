@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import Papa from "papaparse";
 import jsPDF from "jspdf";
 import { Download, FileText, Lightbulb, TrendingUp, AlertTriangle, Sparkles } from "lucide-react";
+import { EmptyState } from "@/components/empty-state";
 
 export const Route = createFileRoute("/_authenticated/reports")({
   head: () => ({ meta: [{ title: "Reports — JarWise" }] }),
@@ -62,11 +63,11 @@ function ReportsPage() {
     queryFn: async () => (await supabase.from("jars").select("*").eq("user_id", userId).order("sort_order")).data ?? [],
   });
 
-  const { data: incomes = [] } = useQuery({
+  const { data: incomes = [], isLoading: incomesLoading } = useQuery({
     queryKey: ["all-incomes", userId],
     queryFn: async () => (await supabase.from("incomes").select("*").eq("user_id", userId).order("received_at", { ascending: true })).data ?? [],
   });
-  const { data: expenses = [] } = useQuery({
+  const { data: expenses = [], isLoading: expensesLoading } = useQuery({
     queryKey: ["all-expenses", userId],
     queryFn: async () => (await supabase.from("expenses").select("*").eq("user_id", userId).order("spent_at", { ascending: true })).data ?? [],
   });
