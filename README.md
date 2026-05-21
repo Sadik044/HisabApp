@@ -3,7 +3,7 @@
 Smart personal finance management using the proven 6 Jar Method.
 Built with love by Sadik Shah 🇧🇩
 
-🚀 Live Demo: https://hisabapp.vercel.app
+🚀 Live Demo: https://hisabapp01.lovable.app/
 
 ---
 
