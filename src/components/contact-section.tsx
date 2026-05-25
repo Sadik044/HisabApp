@@ -54,16 +54,17 @@ export function ContactSection({ id = "contact" }: { id?: string }) {
 
   return (
     <section id={id} className="container mx-auto px-6 py-24">
-      <div className="mx-auto mb-14 max-w-2xl text-center">
+      <div className="mx-auto mb-16 max-w-2xl text-center">
         <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{t("contact.title")}</h2>
-        <p className="mt-3 text-muted-foreground">
+        <div className="h-4" /> {/* Extra spacing */}
+        <p className="text-muted-foreground">
           {t("contact.sub")}
         </p>
       </div>
 
-      <div className="grid gap-10 lg:grid-cols-2">
-        <div>
-          <div className="grid gap-4 sm:grid-cols-2">
+      <div className="mx-auto max-w-4xl">
+        <div className="mb-20">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {contactItems.map((c, i) => (
               <motion.a
                 key={c.key}
@@ -74,27 +75,30 @@ export function ContactSection({ id = "contact" }: { id?: string }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.3, delay: i * 0.05 }}
-                className="group flex items-center gap-4 rounded-2xl border bg-card p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-primary/50 hover:shadow-lg"
+                className="group flex flex-col items-center gap-3 rounded-2xl border bg-card p-6 text-center shadow-sm transition-all hover:-translate-y-1 hover:border-primary/50 hover:shadow-lg"
               >
                 <div className={`grid h-12 w-12 shrink-0 place-items-center rounded-xl ${c.bg} ${c.color} transition-transform group-hover:scale-110`}>
                   <c.icon className="h-5 w-5" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-xs uppercase tracking-wider text-muted-foreground">{t(`contact.${c.key}`)}</div>
+                  <div className="mb-1 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{t(`contact.${c.key}`)}</div>
                   <div className="truncate text-sm font-medium">{c.value}</div>
                 </div>
               </motion.a>
             ))}
           </div>
-          <p className="mt-6 flex items-center gap-1.5 text-sm text-muted-foreground">
-            {t("contact.builtWith")} <Heart className="h-4 w-4 fill-red-500 text-red-500" /> {t("contact.by")}{" "}
-            <span className="font-medium text-foreground">Sadik Shah</span>
-          </p>
+          
+          <div className="mt-8 flex justify-center">
+            <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
+              {t("contact.builtWith")} <Heart className="h-4 w-4 fill-red-500 text-red-500" /> {t("contact.by")}{" "}
+              <span className="font-medium text-foreground">Sadik Shah</span>
+            </p>
+          </div>
         </div>
 
         <form
           onSubmit={onSubmit}
-          className="rounded-2xl border bg-card p-6 shadow-sm md:p-8"
+          className="mx-auto max-w-2xl rounded-2xl border bg-card p-6 shadow-sm md:p-10"
         >
           <div className="space-y-4">
             <div className="space-y-2">
