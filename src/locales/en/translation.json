@@ -284,10 +284,10 @@
     "sentError": "Could not send message. Please try again.",
     "builtWith": "Built with",
     "by": "by",
-    "phone": "Phone",
-    "whatsapp": "WhatsApp",
-    "facebook": "Facebook",
-    "telegram": "Telegram"
+    "phone": "PHONE",
+    "whatsapp": "WHATSAPP",
+    "facebook": "FACEBOOK",
+    "telegram": "TELEGRAM"
   },
   "footer": {
     "tagline": "Smart money management using the 6 Jar Method",
